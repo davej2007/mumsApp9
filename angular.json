@@ -3,7 +3,7 @@
   "version": 1, 
   "newProjectRoot": "projects",
   "projects": {
-    "combinedApp": {
+    "combinedapp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:class": {
@@ -38,7 +38,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/combinedApp",
+            "outputPath": "../combinedServer/public",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -48,9 +48,9 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": [ 
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css" ],
             "scripts": []
           },
           "configurations": {
@@ -87,18 +87,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "combinedApp:build"
+            "browserTarget": "combinedapp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "combinedApp:build:production"
+              "browserTarget": "combinedapp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "combinedApp:build"
+            "browserTarget": "combinedapp:build"
           }
         },
         "test": {
@@ -135,15 +135,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "combinedApp:serve"
+            "devServerTarget": "combinedapp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "combinedApp:serve:production"
+              "devServerTarget": "combinedapp:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "combinedApp"
+  "defaultProject": "combinedapp"
 }
