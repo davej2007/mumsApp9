@@ -1,1 +1,17 @@
-<p>initilize-local-storage works!</p>
+<div class="jumbotron">
+    <h1>Please Select User : </h1>
+    <div class="input-group mb-3">
+        <select class="custom-select" id="selectUser" [(ngModel)]="name">
+            <option value="">Choose...</option>
+            <option value="Dave">Dave</option>
+            <option value="Jacky">Jacky</option>
+            <option value="Andrew">Andrew</option>
+        </select>
+        <div class="input-group-append">
+            <button class="input-group-text" for="selectUser" (click)='select(name)'
+            (disabled)='processing'>Select</button>
+        </div>
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+    <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+</div>
