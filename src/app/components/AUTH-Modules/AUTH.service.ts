@@ -16,22 +16,24 @@ export class AUTHService {
   ) { }
 
 initilizeSettings(): Promise<any> {
-    if(this.Token ==='false' || this.Token===null || this.Token===undefined) this.Token = localStorage.getItem('Token') || 'false';
+  if(this.Token ==='false' || this.Token===null || this.Token===undefined) this.Token = localStorage.getItem('Token') || 'false';
 
-    const AuthPromise = this._Auth.decodeToken()
+  const AuthPromise = this._Auth.decodeToken()
     .toPromise()
     .then(
-        token => {
-            if(!token.success){
-                alert('No Valid Token Found')
-            } else {
-                alert('Valid Token ');
-                console.log(token);
-            }
-        },
-        err =>  {
-            alert('Server Error : '+err.message+' If this continues Please contact Systems.');
-        })
+      token => {
+        if(!token.valid){
+          this.UserName = null;
+          this.admin = '0';
+          this.Token = null;
+        } else { 
+          this.UserName = token.userName;
+          this.admin = token.admin;
+        }
+      },
+      err =>  {
+          alert('Server Error : '+err.message+' If this continues Please contact Systems.');
+      })
 return AuthPromise;
 }
 

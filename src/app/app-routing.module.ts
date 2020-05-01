@@ -11,22 +11,23 @@ import { EbayPageNotFoundComponent }        from './components/pages/ebay/page-n
 import { HomeNavBarComponent }              from './components/pages/home/nav-bar/nav-bar.component';
 import { CalenderComponent }                from './components/pages/home/calender/calender.component';
 import { HomePageNotFoundComponent }        from './components/pages/home/page-not-found/page-not-found.component';
+import { AuthGuard } from './components/guards/auth.guard';
 
 
 const routes: Routes = [
+  {path:'', component: WelcomeToTheSiteComponent, canActivate:[AuthGuard], data: {role: [0,1,2,3,4]}},
   {path:'welcomeFirstTimeUser', component : WelcomeUnAuthorisedComponent},
-  {path:'welcome', component: WelcomeToTheSiteComponent},
   {path:'initilizeUser', component:InitilizeLocalStorageComponent},
-  {path:'ebaySite', component:EbayNavBarComponent,children: [
+  {path:'ebaySite', component:EbayNavBarComponent, canActivate:[AuthGuard], data: {role: [0,1]},
+  children: [
     { path: 'active', component: AuctionsComponent },
     { path: 'sold', component: SoldComponent },
     { path: '**', component: EbayPageNotFoundComponent }
   ]},
-  {path:'homeSite', component:HomeNavBarComponent, children: [
+  {path:'homeSite', component:HomeNavBarComponent, canActivate:[AuthGuard], data: {role: [2,3,4]},children: [
     { path: 'calender', component: CalenderComponent },
     { path: '**', component: HomePageNotFoundComponent }
   ]},
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

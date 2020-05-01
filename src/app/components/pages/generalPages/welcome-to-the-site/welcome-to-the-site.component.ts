@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AUTHService } from 'src/app/components/AUTH-Modules/AUTH.service';
 
 @Component({
   selector: 'welcome-to-the-site',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeToTheSiteComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public _AUTH:AUTHService
+  ) { }
 
   ngOnInit(): void {
+    console.log(this._AUTH.UserName)
   }
 
 }

@@ -42,7 +42,7 @@ export class InitilizeLocalStorageComponent implements OnInit {
             this.successMsg = 'Welcome '+ res.user;
             setTimeout(()=>{
               this.successMsg = 'Re Directing ......';
-              this._Router.navigateByUrl('/welcome');
+              this._Router.navigateByUrl('/');
             },2000)
           }
         },

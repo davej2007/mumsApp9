@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AUTHModule } from './components/AUTH-Modules/AUTH.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { SoldComponent } from './components/pages/ebay/sold/sold.component';
 import { CalenderComponent } from './components/pages/home/calender/calender.component';
 import { EbayPageNotFoundComponent } from './components/pages/ebay/page-not-found/page-not-found.component';
 import { HomePageNotFoundComponent } from './components/pages/home/page-not-found/page-not-found.component';
+import { TokenInterceptorService } from './components/resolvers/token-interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,12 @@ import { HomePageNotFoundComponent } from './components/pages/home/page-not-foun
   exports:[
     AUTHModule
   ],
-  providers: [],
+  providers: [
+    { // HTTP Interceptor set-up
+    provide:HTTP_INTERCEPTORS,
+    useClass:TokenInterceptorService,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,3 +1,3 @@
-<h1>Welcome To The Site</h1>
-<button class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite" routerLinkActive="active">Ebay<br>Auction<br>Site</button>
-<button class="btn btn-outline-success my-2 my-sm-0" routerLink="/homeSite" routerLinkActive="active">Home<br>Visits<br>Site</button>
+<h1>Welcome To The Site  : {{ _AUTH.UserName }}</h1>
+<button *ngIf='_AUTH.adminRights([0,1])'class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite" routerLinkActive="active">Ebay<br>Auction<br>Site</button>
+<button *ngIf='_AUTH.adminRights([2,3,4])'class="btn btn-outline-success my-2 my-sm-0" routerLink="/homeSite" routerLinkActive="active">Home<br>Visits<br>Site</button>
