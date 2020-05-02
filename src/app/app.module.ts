@@ -7,33 +7,36 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TokenInterceptorService } from './components/custom/resolvers/token-interceptor.service';
 
-import { PageNotFoundComponent } from './components/pages/generalPages/page-not-found/page-not-found.component';
-import { WelcomeToTheSiteComponent } from './components/pages/generalPages/welcome-to-the-site/welcome-to-the-site.component';
-import { WelcomeUnAuthorisedComponent } from './components/pages/generalPages/welcome-un-authorised/welcome-un-authorised.component';
+// General Pages
+import { PageNotFoundComponent }          from './components/pages/generalPages/page-not-found/page-not-found.component';
+import { WelcomeToTheSiteComponent }      from './components/pages/generalPages/welcome-to-the-site/welcome-to-the-site.component';
+import { WelcomeUnAuthorisedComponent }   from './components/pages/generalPages/welcome-un-authorised/welcome-un-authorised.component';
 import { InitilizeLocalStorageComponent } from './components/pages/generalPages/initilize-local-storage/initilize-local-storage.component';
-import { EbayNavBarComponent } from './components/pages/ebay/nav-bar/nav-bar.component';
-import { HomeNavBarComponent } from './components/pages/home/nav-bar/nav-bar.component';
-import { AuctionsComponent } from './components/pages/ebay/auctions/auctions.component';
-import { SoldComponent } from './components/pages/ebay/sold/sold.component';
-import { CalenderComponent } from './components/pages/home/calender/calender.component';
-import { EbayPageNotFoundComponent } from './components/pages/ebay/page-not-found/page-not-found.component';
-import { HomePageNotFoundComponent } from './components/pages/home/page-not-found/page-not-found.component';
-import { TokenInterceptorService } from './components/resolvers/token-interceptor.service';
+import { EbayPageNotFoundComponent } from './components/pages/ebayPages/ebay-page-not-found/ebay-page-not-found.component';
+import { EbayNavBarComponent } from './components/pages/ebayPages/ebay-nav-bar/ebay-nav-bar.component';
+import { AuctionTableComponent } from './components/pages/ebayPages/auction-table/auction-table.component';
+// Ebay Pages
+
+// Home Pages
+
+// pipes
+
+// modals
+
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
     WelcomeToTheSiteComponent,
     WelcomeUnAuthorisedComponent,
     InitilizeLocalStorageComponent,
-    EbayNavBarComponent,
-    HomeNavBarComponent,
-    AuctionsComponent,
-    SoldComponent,
+    PageNotFoundComponent,
     EbayPageNotFoundComponent,
-    CalenderComponent,
-    HomePageNotFoundComponent
+    EbayNavBarComponent,
+    AuctionTableComponent,
+    
+    // pipes
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,8 @@ import { TokenInterceptorService } from './components/resolvers/token-intercepto
   ],
   exports:[
     AUTHModule
+  ],
+  entryComponents: [
   ],
   providers: [
     { // HTTP Interceptor set-up
