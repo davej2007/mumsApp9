@@ -62,19 +62,17 @@ export class NewAuctionModalContent implements OnInit {
     this.weight.enable();
   }
   submit(newAuction){
-    console.log(newAuction);
     this.disableForm();
     let newAuctionData = {
       dateListed:Date.parse(newAuction.dateListed),
       description:newAuction.description.trim(),
-      initialPrice:newAuction.initialPrice,
-      postagePaid:newAuction.postagePaid,
+      initialPrice:Math.round(newAuction.initialPrice*100),
+      postagePaid:Math.round(newAuction.postagePaid*100),
       category:newAuction.category,
       weight:newAuction.weight
     }
     this.auction.createNewAuction(newAuctionData).subscribe(
       data => {
-        console.log(data)
         if(!data.success){
           this.disableForm()
           this.errorMsg = data.message;

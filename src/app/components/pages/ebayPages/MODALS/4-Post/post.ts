@@ -70,7 +70,7 @@ export class PostModalContent implements OnInit {
       id : this.id,
       company : PostDetails.company,
       trackingNo : PostDetails.trackingNo.trim(),
-      courierCost : PostDetails.courierCost,
+      courierCost : Math.round(PostDetails.courierCost*100),
       name : PostDetails.name.trim(),
       postCode : PostDetails.postCode.trim()
     }

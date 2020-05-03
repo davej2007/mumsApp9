@@ -90,8 +90,7 @@ export class SoldModalContent implements OnInit {
       dateSold:Date.parse(soldAuction.dateSold),
       private:soldAuction.private,
       auction:soldAuction.auction.trim(),
-      price:soldAuction.price,
-      postagePaid:soldAuction.postagePaid,
+      price:Math.round(soldAuction.price*100),
       userName:soldAuction.userName.trim(),
       postCode:soldAuction.postCode.trim().toUpperCase()
     }

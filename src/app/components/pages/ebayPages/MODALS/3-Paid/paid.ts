@@ -72,7 +72,7 @@ export class PaidModalContent implements OnInit {
       paidBy : paidDetails.paidBy,
       paypalTransaction : paidDetails.paypalTransaction.trim(),
       company: paidDetails.company,
-      postagePaid : paidDetails.postage,
+      postagePaid : Math.round(paidDetails.postage*100),
       buyerName : paidDetails.name.trim(),
       buyerPostCode : paidDetails.postCode.trim().toUpperCase()
     }
