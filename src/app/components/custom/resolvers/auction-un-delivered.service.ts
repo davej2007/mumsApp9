@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuctionService } from '../service/auction.service';
+import { AuctionService } from '../../services/ebay/auction.service';
 
 @Injectable({
   providedIn: 'root'

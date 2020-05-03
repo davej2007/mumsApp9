@@ -18,6 +18,8 @@ import { EbayNavBarComponent }              from './components/pages/ebayPages/0
   import { EbayPageNotFoundComponent }      from './components/pages/ebayPages/9-ebay-page-not-found/ebay-page-not-found.component';
 import { AuctionInfoService } from './components/custom/resolvers/auction-info.service';
 import { AuctionDetailService } from './components/custom/resolvers/auction-details.service';
+import { AuctionUnDeliveredService } from './components/custom/resolvers/auction-un-delivered.service';
+import { AuctionSoldService } from './components/custom/resolvers/auction-sold.service';
 
 const routes: Routes = [
   { path:'',                      component   : WelcomeToTheSiteComponent,
@@ -45,7 +47,8 @@ const routes: Routes = [
                                     data        : {role: [1]}},
           { path : 'confirmDel',    component   : ConfirmDeliveryComponent,
                                     canActivate : [AuthGuard],
-                                    data        : {role: [1]}},
+                                    data        : { role: [1]},
+                                    resolve     : { info : AuctionUnDeliveredService } },
           { path : 'detail/:id',    component   : AuctionDetailsComponent,
                                     canActivate : [AuthGuard],
                                     data        : {role : [1]},
@@ -56,7 +59,8 @@ const routes: Routes = [
                                     resolve     : {info : AuctionDetailService}},
           { path : 'monthlyTotals', component   : MonthlyTotalsComponent,
                                     canActivate : [AuthGuard],
-                                    data        : {role: [0,1]}},
+                                    data        : {role: [0,1]},
+                                    resolve     : {info : AuctionSoldService}},
           { path : '',              redirectTo  : '/ebaySite/active', pathMatch: 'full' },
           { path : '**',            component   : EbayPageNotFoundComponent}
   ]},

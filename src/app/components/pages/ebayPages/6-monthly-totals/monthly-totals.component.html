@@ -1,1 +1,44 @@
-<p>monthly-totals works!</p>
+<div class="container">
+    <h1>Monthly Totals</h1>
+    <br>
+    <div class="btn-group btn-group-toggle">    <!-- Category -->
+        <button type="button" class="btn btn-outline-warning" [class.active]="tableService.category == i" *ngFor="let cat of CategoryList; index as i" (click)='tableService.displayDate = {month:null,year:null}; tableService.category = i'>{{cat}}</button>
+    </div>
+    <br>
+    <div class="btn-group btn-group-toggle">    <!-- Year & Month -->
+        <button type="button" class="btn btn-outline-dark" [class.active]="checkDisplayDate(dis)" *ngFor="let dis of DisplayShow" (click)='tableService.displayDate = dis; tableService.category = undefined'>{{MONTHS[dis.month]}} {{dis.year}}</button>
+    </div>
+    <hr>
+    <h1>No Of Entries : {{ total$ | async }}   Grand Total : {{ (grandTotal$ | async) | displayPounds}}</h1>
+    <div class="ml-3" *ngIf="tableService.loading$ | async">Loading...</div>
+</div>
+<table class="table">
+<thead>
+    <tr>
+        <th>Status</th>
+        <th>Date Sold</th>
+        <th *ngIf='tableService.category == undefined'>Category</th>
+        <th>Description</th>
+        <th>Sold For</th>
+        <th>Postage<br>Paid</th>
+        <th>Courier</th>
+        <th>Courier<br>Cost</th>
+        <th>Fees</th>
+        <th>Total</th>
+    </tr>
+</thead>
+<tbody>
+<tr *ngFor="let entry of Auctions$ | async">      
+    <td>{{ StatusList[entry.status] }}</td>
+    <td>{{ entry.sold.dateSold | date:'dd-MM-yy' }}</td>
+    <td *ngIf='tableService.category == undefined'>{{ CategoryList[entry.category] }}</td>
+        <td class='description'>{{ entry.auction.description }}</td>
+        <td>{{ entry.sold.price | displayPounds }}</td>
+        <td>{{ entry.paid.postage | displayPounds }}</td>
+        <td>{{ entry.courier.company }}</td>
+        <td><span *ngIf='entry.courier.cost>0'>{{ entry.courier.cost | displayPounds }}</span></td>
+        <td>{{ entry.fee | displayFees }}</td>
+        <td>{{ entry | displayTotalIncome }}</td>
+</tr>
+</tbody>
+</table>    

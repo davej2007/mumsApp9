@@ -1,1 +1,50 @@
-<p>confirm-delivery works!</p>
+<div class="container">
+    <h1>Confirm Delivery Of Parcels</h1>
+    <div class="btn-group btn-group-toggle">    <!-- Courier -->
+        <button type="button" class="btn btn-outline-danger" [class.active]="checkCourierActive(-1)" (click)='tableService.status =  CourierShow'>All</button>
+        <button type="button" class="btn btn-outline-primary" [class.active]="checkCourierActive(cor)" *ngFor="let cor of CourierShow" (click)='tableService.status = [cor]'>{{ CourierList[cor] }}</button>
+    </div>
+    <br>
+    <form>
+        <div class="form-group form-inline">
+            Tracking Number: <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="tableService.searchTerm"/>
+            <span class="ml-3" *ngIf="tableService.loading$ | async">Loading...</span>
+        </div>
+    </form>
+</div>
+<table class="table">
+<thead>
+    <tr>
+        <th scope="col">Status</th>
+        <th scope="col">Date Sold</th>
+        <th scope="col">Description</th>
+        <th scope="col">Post Code</th>
+        <th scope="col">Courier</th>
+        <th scope="col">Tracking</th>
+        <th scope="col">Buttons</th>
+    </tr>
+</thead>
+<tbody>
+<tr *ngFor="let entry of Auctions$ | async">      
+    <td>{{ StatusList[entry.status] }}</td>
+    <td>{{ entry.sold.dateSold | date:'dd-MM-yy' }}</td>
+    <td class='description'>{{ entry.auction.description }}</td>
+    <td>{{ entry.sold.buyer.postCode }}</td>
+    <td>{{ entry.courier.company }}</td>
+    <td>{{ entry.courier.trackingNo }}</td>
+    <td>
+        <button class="bth btn-secondary btn-sm" *ngIf='[4].indexOf(entry.status) != -1' (click)="openDelivery(entry)">Delivered</button>       
+    </td>
+</tr>
+</tbody>
+</table>
+<div class="narrow d-flex justify-content-between p-2">
+<ngb-pagination
+    [collectionSize]="(total$ | async)!" [(page)]="tableService.page" [pageSize]="tableService.pageSize">
+</ngb-pagination>
+<select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="tableService.pageSize">
+    <option [ngValue]="5">5 items per page</option>
+    <option [ngValue]="10">10 items per page</option>
+    <option [ngValue]="15">15 items per page</option>
+</select>
+</div>
