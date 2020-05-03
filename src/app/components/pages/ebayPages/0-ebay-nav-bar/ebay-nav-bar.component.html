@@ -1,1 +1,33 @@
-<p>ebay-nav-bar works!</p>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">    
+    <a class="navbar-brand" routerLink="/">Mum's<br>Ebay Auction{{ envName }}</a>
+    
+    <button 
+        class="navbar-toggler navbar-toggler-right"
+        type="button" (click)="toggleCollapse()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div [ngbCollapse]="showMainNav" class="navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" >
+                <button *ngIf='_AUTH.adminRights([0,1])' class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite/active" routerLinkActive="active">Active<br>Auctions</button>
+            </li>
+            <li class="nav-item" >
+                <button *ngIf='_AUTH.adminRights([1])' class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite/sold" routerLinkActive="active">Sold<br>Auctions</button>
+            </li>
+            <li class="nav-item" >
+                <button *ngIf='_AUTH.adminRights([1])' class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite/ebayFees" routerLinkActive="active">Ebay<br>Fees</button>
+            </li>
+            <li class="nav-item" >
+                <button *ngIf='_AUTH.adminRights([1])' class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite/paypalFees" routerLinkActive="active">PayPal<br>Fees</button>
+            </li>
+            <li class="nav-item" >
+                <button *ngIf='_AUTH.adminRights([1])' class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite/confirmDel" routerLinkActive="active">Confirm<br>Delivery</button>
+            </li>
+            <li class="nav-item" >
+                <button *ngIf='_AUTH.adminRights([0,1])' class="btn btn-outline-success my-2 my-sm-0" routerLink="/ebaySite/monthlyTotals" routerLinkActive="active">Monthly<br>Totals</button>
+            </li>
+        </ul>        
+    </div>
+</nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,68 @@
+<div class="container">
+    <h1>{{ AUCTION.auction.description }}</h1>
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Category</th>
+                <td>{{ CategoryList[AUCTION.category] }}</td>
+                <th rowspan="3">Date Listed</th>
+                <td rowspan="3"><p *ngFor="let entry of AUCTION.auction.dateListed">{{ entry | displayDate }}</p></td>
+                <th>Initial Price</th>
+                <td>{{ AUCTION.auction.initialPrice | displayPounds }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ StatusList[AUCTION.status] }}</td>
+                <th>Postage</th>
+                <td>{{ AUCTION.auction.postage | displayPounds }}</td>            
+            </tr>
+            <tr>
+                <th></th>
+                <td></td>
+                <th>Weight</th>
+                <td>{{ AUCTION.auction.weight | displayWeight }}</td>
+            </tr>
+            <!-- SOLD -->
+            <tr>
+                <th rowspan="2">Date Sold</th>
+                <td rowspan="2">{{ AUCTION?.sold.dateSold | displayDate}}</td>
+                <th>Sold To : </th>
+                <td>{{ AUCTION?.sold.buyer.userName }}<br>
+                    {{ AUCTION?.sold.buyer.name }}</td>
+                <th>Ebay No</th>
+                <td>{{ AUCTION?.sold.auctionNo }}</td>
+            </tr>
+            <tr>
+                <th>Post Code</th>
+                <td>{{ AUCTION?.sold.buyer.postCode }}</td>            
+                <th>Final Price</th>
+                <td>{{ AUCTION?.sold.price | displayPounds }}</td>
+            </tr>
+            <tr>
+                <th>Paid By</th>
+                <td>{{ AUCTION?.paid.paidBy }}</td>
+                <th>Paypal Transaction No</th>
+                <td>{{ AUCTION?.paid.transactionNo }}</td>
+                <th>Paypal Fee</th>
+                <td>{{ AUCTION?.fee.paypalFee.cost | displayPounds }}</td>
+            </tr>
+            <tr>
+                <th>Courier</th>
+                <td>{{ AUCTION?.courier.company }}</td>
+                <th>Tracking No</th>
+                <td>{{ AUCTION?.courier.trackingNo }}</td>
+                <th>Courier Cost</th>
+                <td>{{ AUCTION?.courier.cost | displayPounds }}</td>
+            </tr>
+            <tr>
+                <th>Ebay Final Fee</th>
+                <td>{{ AUCTION?.fee.finalFee.cost | displayPounds }}</td>
+                <th>Ebay Postage Fee</th>
+                <td>{{ AUCTION?.fee.postageFee.cost | displayPounds }}</td>
+                <th>Total Profit</th>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="bth btn-danger" [routerLink]="['/ebaySite/edit', AUCTION._id]">Edit</button>
+</div>

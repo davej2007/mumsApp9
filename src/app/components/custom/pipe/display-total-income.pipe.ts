@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { IAUCTION } from '../interface/auction';
+
 @Pipe({
   name: 'displayTotalIncome'
 })
 export class DisplayTotalIncomePipe implements PipeTransform {
 
-  transform(value: IAUCTION): string {
+  transform(value: IAUCTION	): string {
     let soldFor = value.sold.price
     let postagePaid=value.paid.postage;
     if(postagePaid==0 && value.courier.company==null) return 'Needs Payment';

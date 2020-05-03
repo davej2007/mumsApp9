@@ -19,14 +19,4 @@ export class DisplayFeesPipe implements PipeTransform {
     if (value !== null && value !=0 ) output = '£'+(Math.round(value)/100).toFixed(2).toString()
     return output;
   }
-    
-
-//   finalFee:
-// cost: null
-// promo: false
-// set: true
-// __proto__: Object
-// postageFee: {cost: null, set: true}
-// paypalFee: {cost: null, set: false}
-
 }

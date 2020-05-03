@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">Un-Sold Auction</h4>
+</div>
+<div class="modal-body">
+  <h4>{{description}}</h4>
+  <div class="form-group row">
+    <label for="date" class="col-sm-3 col-form-label">Date Listed</label>
+    <div class="col-sm-9">
+      <input [(ngModel)]='dateListed' type="date" class="form-control" id="date"
+      placeholder="Date Listed" [disabled]='processing'>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div *ngIf='!successMsg && !errorMsg'>
+    <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="relist(dateListed)">Re List / Draft</button>
+    <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.close('cancel')">Cancel</button>
+  </div>
+  <div class='messages'> <!-- messages -->
+      <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+      <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+  </div>
+</div>

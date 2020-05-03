@@ -10,7 +10,7 @@ import { ISTATE, ISEARCHRESULT, IDISPLAYDATE }  from 'src/app/components/custom/
 
 @Injectable({providedIn: 'root'})
 
-export class SoldTableControlService {
+export class AuctionTableControlService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _auctions$ = new BehaviorSubject<IAUCTION[]>([]);

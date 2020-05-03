@@ -1,0 +1,81 @@
+<div class="modal-header">
+  <h4 class="modal-title">New Auction</h4>
+</div>
+<div class="modal-body">
+  <form [formGroup]='newAuctionForm'>
+    <!-- dateListed -->
+    <div class="form-group row">
+      <label for="date" class="col-sm-3 col-form-label">Date Listed</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(dateListed.invalid) && dateListed.touched' [class.is-valid]='dateListed.valid && dateListed.touched'
+        formControlName='dateListed' type="date" class="form-control" id="date"
+        placeholder="Date Listed">
+      </div>
+    </div>
+    <!-- description -->
+    <div class="form-group row">
+      <label for="description" class="col-sm-3 col-form-label">Item Description</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(description.invalid || !descriptionValid) && description.touched' [class.is-valid]='description.valid && descriptionValid && description.touched'
+        formControlName='description' type="text" class="form-control" id="description"
+        placeholder="Item Description">
+        <!-- Messages -->
+        <!-- <ul *ngIf='number.valid && numberValid && number.touched'>
+          <li *ngIf='numberValid' class='text-success'>{{ numberMessage }}</li>
+        </ul>  -->
+        <!-- <ul *ngIf='(number.invalid || !numberValid) && number.touched '>
+          <li *ngIf='number.errors?.required' class='text-danger'>Employee Number Is Required</li>
+          <li *ngIf='!numberValid' class='text-danger'>{{ numberMessage }}</li>
+        </ul>     -->
+      </div>
+    </div>
+    <!-- initialPrice -->
+    <div class="form-group row">
+      <label for="price" class="col-sm-3 col-form-label">Initial Price</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(initialPrice.invalid) && initialPrice.touched' [class.is-valid]='initialPrice.valid && initialPrice.touched'
+        formControlName='initialPrice' type="number" class="form-control" id="price"
+        placeholder="Initial Price">
+      </div>
+    </div>
+    <!-- category --> <!-- Droppdown List-->
+    <div class="form-group row">
+      <label for="category" class="col-sm-3 col-form-label">Category</label>
+      <div class="col-sm-9">
+        <select formControlName='category' placeholder="Please Select Category">
+          <option *ngFor="let category of categories; index as i" [ngValue]='i'>{{category}}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- postagePaid -->
+    <div class="form-group row">
+      <label for="postage" class="col-sm-3 col-form-label">Postage Paids</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(postagePaid.invalid) && postagePaid.touched' [class.is-valid]='postagePaid.valid && postagePaid.touched'
+        formControlName='postagePaid' type="number" class="form-control" id="postage"
+        placeholder="Postage Paid">
+      </div>
+    </div>
+    <!-- weight -->
+    <div class="form-group row">
+      <label for="weight" class="col-sm-3 col-form-label">Weight Of Item</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(weight.invalid) && weight.touched' [class.is-valid]='weight.valid && weight.touched'
+        formControlName='weight' type="number" class="form-control" id="weight"
+        placeholder="Weight Of Item">
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <div *ngIf='!successMsg && !errorMsg'>
+    <button type="button" class="btn btn-outline-danger" [disabled]='!newAuctionForm.valid || processing' (click)="submit(newAuctionForm.value)">Create</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="activeModal.dismiss('Cancel')">Cancel</button>
+  </div>
+  <div class='messages'> <!-- messages -->
+      <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+      <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+  </div>
+</div>

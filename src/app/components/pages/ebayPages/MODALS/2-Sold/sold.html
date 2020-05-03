@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h4 class="modal-title">Sold Auction</h4>
+</div>
+<div class="modal-body">
+  <h4>{{ description }}</h4>
+  <form [formGroup]='SoldForm'>
+    <!-- dateSold -->
+    <div class="form-group row">
+      <label for="date" class="col-sm-3 col-form-label">Date Sold</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(dateSold.invalid || !dateValid) && dateSold.touched' [class.is-valid]='dateSold.valid && dateSold.touched && dateValid'
+        formControlName='dateSold' type="date" class="form-control" id="date"
+        placeholder="Date Sold" (blur)='checkDate()'>
+        {{ dateMsg }}
+      </div>
+    </div>
+    <!-- private sale --> <!-- Droppdown List-->
+    <div class="form-group row">
+      <label for="private" class="col-sm-3 col-form-label">Sale Type</label>
+      <div class="col-sm-9">
+        <select formControlName='private' >
+          <option value=false>Ebay Sale</option>
+          <option value=true>Private Sale</option>
+        </select>
+      </div>
+    </div>
+    <!-- auction -->
+    <div class="form-group row" *ngIf='!private.value'>
+      <label for="auction" class="col-sm-3 col-form-label">Item Auction Number</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(auction.invalid) && auction.touched' [class.is-valid]='auction.valid && auction.touched'
+        formControlName='auction' type="text" class="form-control" id="auction"
+        placeholder="Ebay Auction Number">
+      </div>
+    </div>
+    <!-- price -->
+    <div class="form-group row">
+      <label for="price" class="col-sm-3 col-form-label">Sale Price</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(price.invalid) && price.touched' [class.is-valid]='price.valid && price.touched'
+        formControlName='price' type="number" class="form-control" id="price"
+        placeholder="Sale Price">
+      </div>
+    </div>
+    <!-- user name -->
+    <div class="form-group row">
+      <label for="userName" class="col-sm-3 col-form-label">Buyer's User Name</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(userName.invalid) && userName.touched' [class.is-valid]='userName.valid && userName.touched'
+        formControlName='userName' type="text" class="form-control" id="userName"
+        placeholder="Buyer's User Name">
+      </div>
+    </div>
+    <!-- postCode -->
+    <div class="form-group row">
+      <label for="postCode" class="col-sm-3 col-form-label">Buyer's Post Code</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(postCode.invalid) && postCode.touched' [class.is-valid]='postCode.valid && postCode.touched'
+        formControlName='postCode' type="text" class="form-control" id="postCode"
+        placeholder="Buyers Post Code">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <div *ngIf='!successMsg && !errorMsg'>
+    <button type="button" class="btn btn-outline-dark" [disabled]='processing || !dateValid' (click)="submit(SoldForm.value)">Sold</button>
+    <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.close('cancel')">Cancel</button>
+  </div>
+  <div class='messages'> <!-- messages -->
+      <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+      <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+  </div>
+</div>

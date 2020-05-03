@@ -13,7 +13,6 @@ export class WelcomeToTheSiteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this._AUTH.UserName)
   }
 
 }

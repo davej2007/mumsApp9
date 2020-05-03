@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h4 class="modal-title">PAID Auction</h4>
+</div>
+<div class="modal-body">
+  <h4>{{ description }}</h4>
+  <form [formGroup]='PaidForm'>
+    <!-- paidBy --> <!-- Droppdown List-->
+    <div class="form-group row">
+      <label for="paidBy" class="col-sm-3 col-form-label">Method Of Payment</label>
+      <div class="col-sm-9">
+        <select formControlName='paidBy' placeholder="Please Select Payment">
+          <option value='Cash'>Cash</option>
+          <option value='Bank'>Bank Transfer</option>
+          <option value='PayPal'>PayPal</option>
+        </select>
+      </div>
+    </div>
+    <!-- paypalTransaction -->
+    <div class="form-group row" *ngIf='paidBy.value=="PayPal"'>
+      <label for="paypal" class="col-sm-3 col-form-label">Paypal Ref Number</label>
+      <div class="col-sm-9">
+        <input formControlName='paypalTransaction' type="text" class="form-control" id="paypal"
+        placeholder="Pay Pal Reference Number">
+      </div>
+    </div>
+    <!-- company --> <!-- Droppdown List-->
+    <div class="form-group row">
+      <label for="company" class="col-sm-3 col-form-label">Courier Company</label>
+      <div class="col-sm-9">
+        <select formControlName='company' placeholder="Please Select Courier Company">
+          <option value='Collect'>Collect</option>
+          <option value='RoyalMail'>Royal Mail</option>
+          <option value='Hermes'>Hermes</option>
+        </select>
+      </div>
+    </div>
+    <!-- Postage Paid -->
+    <div class="form-group row">
+      <label for="postage" class="col-sm-3 col-form-label">Confirm Postage Paid</label>
+      <div class="col-sm-9">
+        <input  formControlName='postage' type="number" class="form-control" id="postage"
+        placeholder="Postage Paid">
+      </div>
+    </div>
+    <!-- name -->
+    <div class="form-group row">
+      <label for="name" class="col-sm-3 col-form-label">Buyer's Name</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(name.invalid) && name.touched' [class.is-valid]='name.valid && name.touched'
+        formControlName='name' type="text" class="form-control" id="name"
+        placeholder="Buyer's Name">
+      </div>
+    </div>
+    <!-- postCode -->
+    <div class="form-group row">
+      <label for="postCode" class="col-sm-3 col-form-label">Post Code</label>
+      <div class="col-sm-9">
+        <input [class.is-invalid]='(postCode.invalid) && postCode.touched' [class.is-valid]='postCode.valid && postCode.touched'
+        formControlName='postCode' type="text" class="form-control" id="postCode"
+        placeholder="Post Code">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <div *ngIf='!successMsg && !errorMsg'>
+    <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="submit(PaidForm.value)">Paid</button>
+    <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.close('cancel')">Cancel</button>
+  </div>
+  <div class='messages'> <!-- messages -->
+      <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+      <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+  </div>
+</div>

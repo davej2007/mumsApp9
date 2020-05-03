@@ -1,0 +1,230 @@
+<div class="container">
+    <h1>{{ AUCTION.auction.description }}</h1>
+    <ul class="nav nav-tabs nav-justified">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="page == 0" (click)='page=0'>Auction Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="page == 1" (click)='page=1'>Sold Details</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="page == 2" (click)='page=2'>Fees & Courier Details</a>
+        </li>
+    </ul>
+    <div class="formSurround" *ngIf='page==0'>
+        <h4>Auction Details</h4>
+        <form [formGroup]='auctionDetailsForm'>
+            <!-- dateListed -->
+            <div *ngFor="let ticket of t.controls; let i = index">
+                <div [formGroup]="ticket">
+                    <div class="form-group row">
+                        <label for="date" class="col-sm-3 col-form-label">Date Listed</label>
+                        <div class="col-sm-9">
+                            <input type="date" formControlName="dateListed" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- description -->
+            <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label">Item Description</label>
+                <div class="col-sm-9">
+                    <input [class.is-invalid]='description.invalid && description.touched' [class.is-valid]='description.valid && description.touched'
+                    formControlName='description' type="text" class="form-control" id="description"
+                    placeholder="Item Description">
+                </div>
+            </div>
+            <!-- initialPrice -->
+            <div class="form-group row">
+                <label for="price" class="col-sm-3 col-form-label">Initial Price</label>
+                <div class="col-sm-9">
+                    <input [class.is-invalid]='(initialPrice.invalid) && initialPrice.touched' [class.is-valid]='initialPrice.valid && initialPrice.touched'
+                    formControlName='initialPrice' type="number" class="form-control" id="price"
+                    placeholder="Initial Price">
+                </div>
+            </div>
+            <!-- category --> <!-- Droppdown List-->
+            <div class="form-group row">
+                <label for="category" class="col-sm-3 col-form-label">Category</label>
+                <div class="col-sm-9">
+                    <select formControlName='category' placeholder="Please Select Category">
+                        <option *ngFor="let category of CategoryList; index as i" [ngValue]='i'>{{category}}</option>
+                    </select>
+                </div>
+            </div>
+            <!-- postageCharged -->
+            <div class="form-group row">
+                <label for="postage" class="col-sm-3 col-form-label">Postage Paid</label>
+                <div class="col-sm-9">
+                    <input [class.is-invalid]='(postageCharged.invalid) && postageCharged.touched' [class.is-valid]='postageCharged.valid && postageCharged.touched'
+                    formControlName='postageCharged' type="number" class="form-control" id="postage"
+                    placeholder="Postage Paid">
+                </div>
+            </div>
+            <!-- weight -->
+            <div class="form-group row">
+                <label for="weight" class="col-sm-3 col-form-label">Weight Of Item</label>
+                <div class="col-sm-9">
+                    <input [class.is-invalid]='(weight.invalid) && weight.touched' [class.is-valid]='weight.valid && weight.touched'
+                    formControlName='weight' type="number" class="form-control" id="weight"
+                    placeholder="Weight Of Item">
+                </div>
+            </div>
+            <div *ngIf='!successMsg && !errorMsg'>
+                {{ processing }}
+                <button type="button" class="btn btn-outline-danger" [disabled]='processing' (click)="submitAuctionDetails(auctionDetailsForm.value)">Update</button>
+                <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="formSurround" *ngIf='page==1'>
+        <h4>Buyers Details</h4>
+        <form [formGroup]='buyerDetailsForm'>
+            <!-- dateSold -->
+            <div class="form-group row">
+                <label for="dateSold" class="col-sm-3 col-form-label">Date Sold</label>
+                <div class="col-sm-9">
+                    <input formControlName='dateSold' type="date" class="form-control" id="dateSold" placeholder="Date Sold">
+                </div>
+            </div>
+            <!-- buyerUserName -->
+            <div class="form-group row">
+                <label for="buyerUserName" class="col-sm-3 col-form-label">Buyer's User Name</label>
+                <div class="col-sm-9">
+                    <input formControlName='buyerUserName' type="text" class="form-control" id="buyerUserName" placeholder="Buyer's User Name">
+                </div>
+            </div>
+            <!-- buyerName -->
+            <div class="form-group row">
+                <label for="buyerName" class="col-sm-3 col-form-label">Buyer's Name</label>
+                <div class="col-sm-9">
+                    <input formControlName='buyerName' type="text" class="form-control" id="buyerName" placeholder="Buyer's Name">
+                </div>
+            </div>
+            <!-- pricePaid -->
+            <div class="form-group row">
+                <label for="price" class="col-sm-3 col-form-label">Final Sale Price</label>
+                <div class="col-sm-9">
+                    <input formControlName='pricePaid' type="number" class="form-control" id="price" placeholder="Final Sale Price">
+                </div>
+            </div>
+            <!-- auctionNumber -->
+            <div class="form-group row">
+                <label for="auction" class="col-sm-3 col-form-label">Ebay Auction No</label>
+                <div class="col-sm-9">
+                    <input formControlName='auctionNumber' type="text" class="form-control" id="auction" placeholder="Ebay Auction Number">
+                </div>
+            </div>
+            <!-- buyerPostCode -->
+            <div class="form-group row">
+                <label for="postCode" class="col-sm-3 col-form-label">Buyer's Post Code</label>
+                <div class="col-sm-9">
+                    <input  formControlName='buyerPostCode' type="text" class="form-control" id="postCode" placeholder="Buyer's Post Code">
+                </div>
+            </div>
+            <!-- postagePaid -->
+            <div class="form-group row">
+                <label for="postagePaid" class="col-sm-3 col-form-label">Postage Paid</label>
+                <div class="col-sm-9">
+                    <input formControlName='postagePaid' type="number" class="form-control" id="postagePaid" placeholder="Postage Paid">
+                </div>
+            </div>
+            <!-- methodPayment --> <!-- Droppdown List-->
+            <div class="form-group row">
+                <label for="methodPayment" class="col-sm-3 col-form-label">Method Of Payment</label>
+                <div class="col-sm-9">
+                    <select formControlName='methodPayment'placeholder="Please Select Payment">
+                        <option value='Cash'>Cash</option>
+                        <option value='Bank'>Bank Transfer</option>
+                        <option value='PayPal'>PayPal</option>
+                    </select>
+                </div>
+            </div>
+            <!-- paypalTransactionNo -->
+            <div class="form-group row">
+                <label for="paypalTransactionNo" class="col-sm-3 col-form-label">Paypal Transaction Number</label>
+                <div class="col-sm-9">
+                    <input  formControlName='paypalTransactionNo' type="text" class="form-control" id="paypalTransactionNo" placeholder="Paypal Transaction Number">
+                </div>
+            </div>
+            <div *ngIf='!successMsg && !errorMsg'>
+                {{ processing }}
+                <button type="button" class="btn btn-outline-danger" [disabled]='processing' (click)="submitBuyerDetails(buyerDetailsForm.value)">Update</button>
+                <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="formSurround" *ngIf='page==2'>
+        <h4>Fees & Courier Details</h4>
+        <form [formGroup]='feeCourierDetailsForm'>
+
+                
+            <!-- ebayFinalFee -->
+            <div class="form-group row">
+                <label for="ebayFinalFee" class="col-sm-3 col-form-label">Ebay Final Fee</label>
+                <div class="col-sm-9">
+                    <input formControlName='ebayFinalFee' type="number" class="form-control" id="ebayFinalFee" placeholder="Ebay Final Fee">
+                </div>
+            </div>
+            <!-- ebayPostageFee -->
+            <div class="form-group row">
+                <label for="ebayPostageFee" class="col-sm-3 col-form-label">Ebay Postage Fee</label>
+                <div class="col-sm-9">
+                    <input formControlName='ebayPostageFee' type="number" class="form-control" id="ebayPostageFee" placeholder="Ebay Postage Fee">
+                </div>
+            </div>
+            <!-- paypalFee -->
+            <div class="form-group row">
+                <label for="paypalFee" class="col-sm-3 col-form-label">Paypal Transaction Charge</label>
+                <div class="col-sm-9">
+                    <input formControlName='paypalFee' type="number" class="form-control" id="paypalFee" placeholder="Paypal Transaction Charge">
+                </div>
+            </div>
+            <!-- courierCompany --> <!-- Droppdown List-->
+            <div class="form-group row">
+                <label for="courierCompany" class="col-sm-3 col-form-label">Method Of Payment</label>
+                <div class="col-sm-9">
+                    <select formControlName='courierCompany'placeholder="Please Select Payment">
+                        <option value='Collect'>Collect</option>
+                        <option value='RoyalMail'>Royal Mail</option>
+                        <option value='Hermes'>Hermes</option>
+                    </select>
+                </div>
+            </div>
+            <!-- courierTrackingNo -->
+            <div class="form-group row">
+                <label for="courierTrackingNo" class="col-sm-3 col-form-label">Courier Tracking No</label>
+                <div class="col-sm-9">
+                    <input formControlName='courierTrackingNo' type="text" class="form-control" id="courierTrackingNo" placeholder="Courier Tracking No">
+                </div>
+            </div>
+            <!-- courierCost -->
+            <div class="form-group row">
+                <label for="courierCost" class="col-sm-3 col-form-label">Courier Cost</label>
+                <div class="col-sm-9">
+                    <input  formControlName='courierCost' type="number" class="form-control" id="courierCost" placeholder="Courier Cost">
+                </div>
+            </div>
+            <!-- courierDelivered -->
+            <div class="form-group row">
+                <label for="courierDelivered" class="col-sm-3 col-form-label">Date Delivered</label>
+                <div class="col-sm-9">
+                    <input formControlName='courierDelivered' type="date" class="form-control" id="courierDelivered" placeholder="Date Delivered">
+                </div>
+            </div>
+            <div *ngIf='!successMsg && !errorMsg'>
+                <button type="button" class="btn btn-outline-danger" [disabled]='processing' (click)="submitFeeCourierDetails(feeCourierDetailsForm.value)">Update</button>
+                <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class='messages'> <!-- messages -->
+        <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+        <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+    </div>
+    <div *ngIf='!successMsg && !errorMsg && changes'>
+        <button type="button" class="btn btn-outline-danger" [disabled]='processing' (click)="saveUpdatedDetails()">Save Changes</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+    </div>
+</div>

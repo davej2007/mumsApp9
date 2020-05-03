@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4 class="modal-title">POST Auction</h4>
+  </div>
+  <div class="modal-body">
+    <h4>{{ description }}</h4>
+    <form [formGroup]='PostForm'>
+      <!-- company --> <!-- Droppdown List-->
+      <div class="form-group row">
+        <label for="company" class="col-sm-3 col-form-label">Courier Company</label>
+        <div class="col-sm-9">
+          <select formControlName='company' placeholder="Please Select Courier Company">
+            <option value='Collect'>Collect</option>
+            <option value='RoyalMail'>Royal Mail</option>
+            <option value='Hermes'>Hermes</option>
+          </select>
+        </div>
+      </div>
+      <!-- trackingNo -->
+      <div class="form-group row" *ngIf='company.value!="Collect"'>
+        <label for="trackingNo" class="col-sm-3 col-form-label">Tracking Number</label>
+        <div class="col-sm-9">
+          <input formControlName='trackingNo' type="text" class="form-control" id="trackingNo"
+          placeholder="Tracking Number">
+        </div>
+      </div>
+      <!-- courierCost -->
+      <div class="form-group row"  *ngIf='company.value!="Collect"'>
+        <label for="courierCost" class="col-sm-3 col-form-label">Courier Cost Paid</label>
+        <div class="col-sm-9">
+          <input  formControlName='courierCost' type="number" class="form-control" id="courierCost"
+          placeholder="Courier Cost">
+        </div>
+      </div>
+      <!-- name -->
+      <div class="form-group row">
+        <label for="name" class="col-sm-3 col-form-label">Buyer's Name</label>
+        <div class="col-sm-9">
+          <input [class.is-invalid]='(name.invalid) && name.touched' [class.is-valid]='name.valid && name.touched'
+          formControlName='name' type="text" class="form-control" id="name"
+          placeholder="Buyer's Name">
+        </div>
+      </div>
+      <!-- postCode -->
+      <div class="form-group row">
+        <label for="postCode" class="col-sm-3 col-form-label">Post Code</label>
+        <div class="col-sm-9">
+          <input [class.is-invalid]='(postCode.invalid) && postCode.touched' [class.is-valid]='postCode.valid && postCode.touched'
+          formControlName='postCode' type="text" class="form-control" id="postCode"
+          placeholder="Post Code">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div *ngIf='!successMsg && !errorMsg'>
+      <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="submit(PostForm.value)">Dispatch</button>
+      <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.close('cancel')">Cancel</button>
+    </div>
+    <div class='messages'> <!-- messages -->
+        <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+        <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+    </div>
+  </div>
