@@ -1,1 +1,98 @@
-<p>pay-pal-fees works!</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Auction<br>Number</th>
+            <th>Description</th>
+            <th>Buyer<br>UserName</th>
+            <th>Buyer<br>Name</th>
+            <th>Pay Pal<br>Fee</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of PayPalFeeList; let i = index" 
+        [ngClass]="{'uploaded': entry.uploaded,
+                    'warn': i == placeInArray.value, 
+                    'error': entry.error}">
+            <td>{{ entry.ebayAuctionNo }}</td>
+            <td>{{ entry.description }}</td>
+            <td>{{ entry.buyerUserName }}</td>
+            <td>{{ entry.buyerName }}</td>
+            <td>{{ entry.paypalFee | displayPounds }}</td>
+            <td>{{ (entry.soldFor + entry.paidPostage - entry.paypalFee) | displayPounds }}</td>
+        </tr>
+    </tbody>
+</table>
+<hr>
+<div class="container">
+    <h4>Enter Paypal Fees</h4>
+    <form [formGroup]='FeeForm'>
+        <!-- ebayAuctionNo -->
+        <div class="form-group row">
+            <label for="ebayAuctionNo" class="col-sm-3 col-form-label">Ebay Auction Number</label>
+            <div class="col-sm-9">
+                <input [class.is-invalid]='(ebayAuctionNo.invalid || !ebayAuctionValid) && ebayAuctionNo.touched'
+                    [class.is-valid]='ebayAuctionNo.valid && ebayAuctionValid && ebayAuctionNo.touched'
+                    formControlName='ebayAuctionNo' type="text" class="form-control" id="ebayAuctionNo"
+                    placeholder="Ebay Auction Number / Paypal Transaction No" (blur)='findEbayAuction()'>
+                <!-- Messages -->
+            <ul *ngIf='(ebayAuctionNo.invalid || !ebayAuctionValid) && ebayAuctionNo.touched '>
+                <li *ngIf='ebayAuctionNo.errors?.required' class='text-danger'>Ebay Auction Number Is Required</li>
+                <li *ngIf='!ebayAuctionValid' class='text-danger'>{{ ebayAuctionError }}</li>
+            </ul>
+            </div>
+        </div>
+        <div *ngIf='ebayAuctionNo.valid && ebayAuctionValid && ebayAuctionNo.touched'>
+            <!-- description -->
+            <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label">Item Description</label>
+                <div class="col-sm-9">
+                    <p class="form-control is-valid" id="description">{{ description.value }}</p>
+                </div>
+            </div>
+            <!-- buyerName -->
+            <div class="form-group row">
+                <label for="buyerName" class="col-sm-3 col-form-label">Buyer</label>
+                <div class="col-sm-3">
+                    <p class="form-control is-valid" id="buyerName">{{ buyerUserName.value }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="form-control is-valid" id="buyerName">{{ buyerName.value }}</p>
+                </div>
+            </div>
+            <!-- soldFor -->
+            <div class="form-group row">
+                <label for="soldFor" class="col-sm-3 col-form-label">Purchase For</label>
+                <div class="col-sm-3">
+                    <p class="form-control is-valid" id="soldFor">{{ soldFor.value | displayPounds }}</p>
+                </div>
+                <label for="paidPostage" class="col-sm-3 col-form-label">Courier Cost</label>
+                <div class="col-sm-3">
+                    <p class="form-control is-valid" id="paidPostage">{{ paidPostage.value | displayPounds }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- paypalFee -->
+        <div class="form-group row" *ngIf='paypalSet.value && ebayAuctionValid'>
+            <label for="paypalFee" class="col-sm-3 col-form-label">Pay Pal Fee</label>
+            <div class="col-sm-3">
+                <input formControlName='paypalFee' type="number" class="form-control" id="paypalFee"
+                placeholder="Pay Pal Fee">
+            </div>
+            <label for="total" class="col-sm-3 col-form-label">Total</label>
+            <div class="col-sm-3">
+                <p class="form-control is-valid" id="total">{{ (soldFor.value + paidPostage.value - (paypalFee.value)*100) | displayPounds }}</p>
+            </div>
+        </div>
+    </form>
+    <div *ngIf='!successMsg && !errorMsg'>
+        <button type="button" class="btn btn-outline-dark" [disabled]='processing || !(ebayAuctionValid && ebayAuctionNo.touched)' (click)="submit(FeeForm.value)">Update</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]='processing'>Cancel</button>
+        <button type="button" class="btn btn-outline-dark" *ngIf='PayPalFeeList.length>0 && !uploadComplete' [disabled]='processing || PayPalFeeList.length == 0' (click)="update()">Save All Fees</button>
+        <button type='button' class='btn btn-outline-danger' *ngIf='uploadComplete' [disabled]='processing || PayPalFeeList.length == 0'  (click)="complete()">Completed</button>  
+    </div>
+    <div class='messages'> <!-- messages -->
+        <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+        <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+    </div>
+</div>

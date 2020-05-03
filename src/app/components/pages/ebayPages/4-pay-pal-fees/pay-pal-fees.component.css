@@ -1,0 +1,17 @@
+.warn {
+    background-color: #f0ad4e;
+}
+.uploaded {
+    background-color:#5cb85c;
+}
+.error {
+    background-color:#d9534f;
+}
+.table {
+    width:95%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.th .tr{
+    padding :0
+}
