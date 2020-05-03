@@ -7,6 +7,9 @@
 .table td{
     padding : 0 2px;
 }
+.table th{
+    padding : 3px 2px
+}
 .narrow {
     width:75%;
     margin-left: 12%;
