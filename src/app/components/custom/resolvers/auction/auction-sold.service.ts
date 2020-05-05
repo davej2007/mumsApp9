@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuctionService } from '../../services/ebay/auction.service';
+import { AuctionService } from '../../../services/ebay/auction.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuctionUnDeliveredService implements Resolve<any> {
+export class AuctionSoldService implements Resolve<any> {
   
   constructor(
     public _auction:AuctionService
@@ -14,6 +14,8 @@ export class AuctionUnDeliveredService implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
   Observable<any> | Promise<any> | any{    
-    return this._auction.getUnDeliveredAuctionDetails();
-  }     
+    return this._auction.getSoldAuctionDetails();
+  }
+        
 };
+

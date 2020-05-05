@@ -26,6 +26,12 @@ import { AuctionDetailsComponent }        from './components/pages/ebayPages/7-a
 import { EditAuctionComponent }           from './components/pages/ebayPages/8-edit-auction/edit-auction.component';
 import { EbayPageNotFoundComponent }      from './components/pages/ebayPages/9-ebay-page-not-found/ebay-page-not-found.component';
 // Home Pages
+import { HomeNavBarComponent }            from './components/pages/homePages/0-home-nav-bar/home-nav-bar.component';
+import { CalenderDisplayComponent }       from './components/pages/homePages/1-calender-display/calender-display.component';
+import { VisitHouseComponent }            from './components/pages/homePages/3-visit-house/visit-house.component';
+import { EstateAgentVisitComponent }      from './components/pages/homePages/4-estate-agent-visit/estate-agent-visit.component';
+import { UpdateBinDatesComponent }        from './components/pages/homePages/5-update-bin-dates/update-bin-dates.component';
+import { HomePageNotFoundComponent }      from './components/pages/homePages/9-home-page-not-found/home-page-not-found.component';
 
 // pipes
 import { DecimalPipe }                    from '@angular/common';
@@ -33,6 +39,8 @@ import { DisplayPoundsPipe }              from './components/custom/pipe/display
 import { ChooseDatePipe }                 from './components/custom/pipe/choose-date.pipe';
 import { DisplayWeightPipe }              from './components/custom/pipe/display-weight.pipe';
 import { DisplayDatePipe }                from './components/custom/pipe/display-date.pipe';
+import { DisplayTotalIncomePipe }         from './components/custom/pipe/display-total-income.pipe';
+import { DisplayFeesPipe }                from './components/custom/pipe/display-fees.pipe';
 
 // modals
 import { NewAuctionModalContent }         from './components/pages/ebayPages/MODALS/0-NewAuction/newAuction';
@@ -41,8 +49,7 @@ import { SoldModalContent }               from './components/pages/ebayPages/MOD
 import { PaidModalContent }               from './components/pages/ebayPages/MODALS/3-Paid/paid';
 import { DeliveryModalContent }           from './components/pages/ebayPages/MODALS/5-Delivery/delivery';
 import { PostModalContent }               from './components/pages/ebayPages/MODALS/4-Post/post';
-import { DisplayTotalIncomePipe } from './components/custom/pipe/display-total-income.pipe';
-import { DisplayFeesPipe } from './components/custom/pipe/display-fees.pipe';
+import { ListDisplayComponent } from './components/pages/homePages/2-list-display/list-display.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +81,14 @@ import { DisplayFeesPipe } from './components/custom/pipe/display-fees.pipe';
     PostModalContent,
     DeliveryModalContent,
     DisplayTotalIncomePipe,
-    DisplayFeesPipe
+    DisplayFeesPipe,
+    HomeNavBarComponent,
+    HomePageNotFoundComponent,
+    CalenderDisplayComponent,
+    VisitHouseComponent,
+    EstateAgentVisitComponent,
+    UpdateBinDatesComponent,
+    ListDisplayComponent
   ],
   imports: [
     BrowserModule,

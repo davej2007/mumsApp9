@@ -16,15 +16,24 @@ import { EbayNavBarComponent }              from './components/pages/ebayPages/0
   import { AuctionDetailsComponent }        from './components/pages/ebayPages/7-auction-details/auction-details.component';
   import { EditAuctionComponent }           from './components/pages/ebayPages/8-edit-auction/edit-auction.component';
   import { EbayPageNotFoundComponent }      from './components/pages/ebayPages/9-ebay-page-not-found/ebay-page-not-found.component';
-import { AuctionInfoService } from './components/custom/resolvers/auction-info.service';
-import { AuctionDetailService } from './components/custom/resolvers/auction-details.service';
-import { AuctionUnDeliveredService } from './components/custom/resolvers/auction-un-delivered.service';
-import { AuctionSoldService } from './components/custom/resolvers/auction-sold.service';
+import { AuctionInfoService }               from './components/custom/resolvers/auction/auction-info.service';
+import { AuctionDetailService }             from './components/custom/resolvers/auction/auction-details.service';
+import { AuctionUnDeliveredService }        from './components/custom/resolvers/auction/auction-un-delivered.service';
+import { AuctionSoldService }               from './components/custom/resolvers/auction/auction-sold.service';
+// Home Site Stuff
+import { HomeNavBarComponent }              from './components/pages/homePages/0-home-nav-bar/home-nav-bar.component';
+  import { CalenderDisplayComponent }       from './components/pages/homePages/1-calender-display/calender-display.component';
+  import { ListDisplayComponent }           from './components/pages/homePages/2-list-display/list-display.component';
+  import { VisitHouseComponent }            from './components/pages/homePages/3-visit-house/visit-house.component';
+  import { EstateAgentVisitComponent }      from './components/pages/homePages/4-estate-agent-visit/estate-agent-visit.component';
+  import { UpdateBinDatesComponent }        from './components/pages/homePages/5-update-bin-dates/update-bin-dates.component';
+  import { HomePageNotFoundComponent }      from './components/pages/homePages/9-home-page-not-found/home-page-not-found.component';
+import { VisitInfoService } from './components/custom/resolvers/visits/visit-details.service';
 
 const routes: Routes = [
   { path:'',                      component   : WelcomeToTheSiteComponent,
-                                  // canActivate : [AuthGuard],
-                                  // data        : {role: [0,1,2,3,4]}
+                                  canActivate : [AuthGuard],
+                                  data        : {role: [0,1,2,3,4]}
                                 },
 
   { path:'welcomeFirstTimeUser',  component   : WelcomeUnAuthorisedComponent},
@@ -65,10 +74,29 @@ const routes: Routes = [
           { path : '**',            component   : EbayPageNotFoundComponent}
   ]},
   // Home Site
-  
-  { path: '**',                   component   : PageNotFoundComponent }
+  { path:'homeSite',                component   : HomeNavBarComponent, children: [
+          { path : 'calender',      component   : CalenderDisplayComponent,
+                                    canActivate : [AuthGuard],
+                                    data        : { role : [2,3,4]  } },
+          { path : 'visitList',     component   : ListDisplayComponent,
+                                    canActivate : [AuthGuard],
+                                    data        : { role : [2,3,4]  },
+                                    resolve     : { info : VisitInfoService } },
+          { path : 'visitHouse',    component   : VisitHouseComponent,
+                                    canActivate : [AuthGuard],
+                                    data        : { role : [3,4]  } },
+          { path : 'agentVisit',    component   : EstateAgentVisitComponent,
+                                    canActivate : [AuthGuard],
+                                    data        : { role : [4]  } },
+          { path : 'binDates',      component   : UpdateBinDatesComponent,
+                                    canActivate : [AuthGuard],
+                                    data        : { role : [4]  } },                          
+    { path : '',                    redirectTo  : '/homeSite/calender', pathMatch: 'full' },
+    { path : '**',                  component   : HomePageNotFoundComponent}
+]},
+  { path: '**',                     component   : PageNotFoundComponent }
 ];
-
+// 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

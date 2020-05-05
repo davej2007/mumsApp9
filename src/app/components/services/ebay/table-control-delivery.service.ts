@@ -7,7 +7,7 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { SortDirection } from 'src/app/components/custom/directive/sortable.directive';
 
 import { IAUCTION } from 'src/app/components/custom/interface/auction';
-import { ISTATE, ISEARCHRESULT, IDISPLAYDATE } from 'src/app/components/custom/interface/state';
+import { IASTATE, IASEARCHRESULT, IDISPLAYDATE } from 'src/app/components/custom/interface/state';
 
 const compare = (v1: number, v2: number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
@@ -31,7 +31,7 @@ export class DeliveryTableControlService  {
   private _auctions$ = new BehaviorSubject<IAUCTION[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
 
-  private _state: ISTATE = {
+  private _state: IASTATE = {
     page: 1,
     pageSize: 10,
     searchTerm: '',
@@ -74,11 +74,11 @@ export class DeliveryTableControlService  {
   set status(status: Array<number>) { this._set({status}); }
   set displayDate(displayDate: IDISPLAYDATE) { this._set({displayDate}); }
 
-  private _set(patch: Partial<ISTATE>) {
+  private _set(patch: Partial<IASTATE>) {
     Object.assign(this._state, patch);
     this._search$.next();
   }
-  private _search(): Observable<ISEARCHRESULT> {
+  private _search(): Observable<IASEARCHRESULT> {
     const { sortDirection, pageSize, page, searchTerm} = this._state;
 
     // 1. sort

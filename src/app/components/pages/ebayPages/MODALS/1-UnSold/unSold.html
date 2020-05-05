@@ -13,6 +13,8 @@
 </div>
 <div class="modal-footer">
   <div *ngIf='!successMsg && !errorMsg'>
+    <button type="button" class="btn btn-outline-secondary" [disabled]='processing' (click)="week()">+ 7 days</button>
+    <button type="button" class="btn btn-outline-secondary" [disabled]='processing' (click)="today()">today</button>
     <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="relist(dateListed)">Re List / Draft</button>
     <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.close('cancel')">Cancel</button>
   </div>

@@ -1,13 +1,11 @@
-<div class="jumbotron">
+<div class="container jumbotron">
     <h1>Please Select User : </h1>
     <div class="input-group mb-3">
         <select class="custom-select" id="selectUser" [(ngModel)]="name">
             <option value="">Choose...</option>
             <option value="Dave">Dave</option>
             <option value="Jacky">Jacky</option>
-            <option value="Andrew">Andrew</option>
-            <option value="Emily">Emily</option>
-            
+            <option value="Andrew">Andrew</option>            
         </select>
         <div class="input-group-append">
             <button class="input-group-text" for="selectUser" (click)='select(name)'

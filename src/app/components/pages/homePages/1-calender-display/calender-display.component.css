@@ -1,0 +1,10 @@
+.NotCurrent {
+    background-color: lightslategray;
+}
+.today {
+    background-color: blue;
+    color : Yellow;
+}
+.normal {
+    color:red
+}

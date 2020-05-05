@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="btn-group btn-group-toggle">    <!-- Year & Month -->
+        <button type="button" class="btn btn-outline-dark" [class.active]="checkDisplayDate(dis)"
+        *ngFor="let dis of DisplayShow" (click)='DisplayMonth = dis; reloadMonth(DisplayMonth);'>
+            {{MONTHS[dis.month]}} {{dis.year}}
+        </button>
+    </div>
+</div>
+<h1>{{DisplayMonth.month}}:{{DisplayMonth.year}}</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th *ngFor='let day of DAYS'>{{day}}</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let week of WEEKS'>
+        <th>{{ week.weekCommence | displayDate }}</th>
+        <td *ngFor='let day of week.Days' [ngClass]="getCustomCss(day.date)">
+            <span>{{ day.data }}</span>
+        </td>
+    </tr>
+  </tbody>
+</table>

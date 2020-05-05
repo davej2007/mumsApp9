@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuctionService } from '../../services/ebay/auction.service';
+import { VisitsService } from 'src/app/components/services/home/visits.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuctionDetailService implements Resolve<any> {
+export class VisitInfoService implements Resolve<any> {
   
   constructor(
-    public _auction:AuctionService
+    public _visit:VisitsService
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
-  Observable<any> | Promise<any> | any{ 
-    return this._auction.getAuctionById(route.params.id);
+  Observable<any> | Promise<any> | any{    
+    return this._visit.getVisitsDetails();
   }
         
 };
