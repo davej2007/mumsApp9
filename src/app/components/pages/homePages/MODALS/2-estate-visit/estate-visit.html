@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <h4 class="modal-title">Estate Agent Appointment</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]='EstateForm'>
+        <!-- date -->
+        <div class="form-group row">
+            <label for="date" class="col-sm-3 col-form-label">Date</label>
+            <div class="col-sm-9">
+                <input [class.is-invalid]='(date.invalid || !dateValid) && date.touched' [class.is-valid]='date.valid && date.touched && dateValid'
+                formControlName='date' type="date" class="form-control" id="date"
+                placeholder="Date" (blur)='checkDate(date.value)'>
+                <ul *ngIf='date.valid && dateValid && date.dirty'> <!-- Success messages -->
+                    <li *ngIf='dateValid && date.valid'  class='text-success'>{{ dateMsg }}</li>
+                </ul>
+                <ul *ngIf='(date.invalid || !dateValid) && date.dirty'> <!-- error messages -->
+                    <li *ngIf='date.errors?.required' class='text-danger'>A Date Is Required</li>
+                    <li *ngIf='!dateValid'  class='text-danger'>{{ dateMsg }}</li>
+                </ul>
+            </div>
+        </div>
+        <!-- time -->
+        <div class="form-group row">
+            <label for="time" class="col-sm-3 col-form-label">Time</label>
+            <div class="col-sm-9">
+                <input [class.is-invalid]='(time.invalid) && time.touched' [class.is-valid]='time.valid && time.touched'
+                formControlName='time' type="time" class="form-control" id="time"
+                placeholder="time">
+            </div>
+        </div>
+        <!-- name -->
+        <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+                <input [class.is-invalid]='(name.invalid) && name.touched' [class.is-valid]='name.valid && name.touched'
+                formControlName='name' type="text" class="form-control" id="name"
+                placeholder="name">
+            </div>
+        </div>
+        <!-- Feedback -->
+        <div class="form-group row">
+            <label for="comment" class="col-sm-3 col-form-label">FeedBack</label>
+            <div class="col-sm-9">
+                <textarea id='feedback' name='feedback' formControlName="feedback" rows="10" cols="50"></textarea>
+            </div>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div *ngIf='!successMsg && !errorMsg'>
+        <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="submit(EstateForm.value)">Save</button>
+        <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.dismiss('Cancel')">Cancel</button>
+    </div>
+    <div class='messages'> <!-- messages -->
+        <div class="alert alert-success" role="alert" *ngIf='successMsg'>{{ successMsg }}</div>
+        <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+    </div>
+  </div>

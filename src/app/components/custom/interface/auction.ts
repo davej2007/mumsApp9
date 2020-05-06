@@ -1,3 +1,7 @@
+import { SortDirection } from '../directive/sortable.directive';
+import { IDISPLAYDATE } from './state';
+
+
 export interface IAUCTION {
   _id:String,
   status : number,
@@ -27,3 +31,17 @@ export interface IAUCTION {
   },
   archive : Boolean
 }
+export interface IASEARCHRESULT {
+    entries: IAUCTION[];
+    total: number;
+    grandTotal:number;
+  }
+  export interface IASTATE {
+    page: number,
+    pageSize: number,
+    searchTerm: string,
+    sortDirection: SortDirection,
+    category : number,
+    status : Array<number>,
+    displayDate : IDISPLAYDATE
+  }

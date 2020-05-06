@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import { NgbdSortableHeader, SortEvent } from 'src/app/components/custom/directive/sortable.directive';
 
 import { STATUS, CATEGORIES }         from 'src/app/components/custom/directive/defaultValues';
 import { IAUCTION }                   from 'src/app/components/custom/interface/auction';
@@ -88,7 +87,8 @@ export class AuctionTableComponent implements OnInit{
         } else {
           console.log('Error from Modal : ', res)
         }
-      }
+      },
+      reason => { console.log('UnSold Cancelled.') }
     );
   }
   openNewAuction() {
@@ -115,7 +115,8 @@ export class AuctionTableComponent implements OnInit{
         } else {
           console.log('Error from Modal : ', res)
         }
-      }
+      },
+      reason => { console.log('SOld Cancelled.') }
     );
   }
   reloadTableData(){

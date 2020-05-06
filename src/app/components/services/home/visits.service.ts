@@ -6,7 +6,16 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class VisitsService {
-
+  // date    : req.body.date,
+  // home    : { by      : req.body.person,
+  //             checks  : { water   : req.body.water,
+  //                         windows : req.body.windows,
+  //                         doors   : req.body.doors },
+  //             comments: req.body.comments },
+  // agent   : { time    : req.body.time,
+  //             name    : req.body.name,
+  //             feedback: req.body.feedback},
+  // bins    : { type    : req.body.bins}
   constructor(public _HTTP:HttpClient) { }
 
   newVisit(visit:any){

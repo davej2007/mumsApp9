@@ -16,12 +16,6 @@
                 <button *ngIf='_AUTH.adminRights([2,3,4])' class="btn btn-outline-primary my-2 my-sm-0" routerLink="/homeSite/visitList" routerLinkActive="active">Display<br>List</button>
             </li>
             <li class="nav-item" >
-                <button *ngIf='_AUTH.adminRights([3,4])' class="btn btn-outline-primary my-2 my-sm-0" routerLink="/homeSite/visitHouse" routerLinkActive="active">Visit<br>House</button>
-            </li>
-            <li class="nav-item" >
-                <button *ngIf='_AUTH.adminRights([4])' class="btn btn-outline-primary my-2 my-sm-0" routerLink="/homeSite/agentVisit" routerLinkActive="active">Estate Agent<br>Visit</button>
-            </li>
-            <li class="nav-item" >
                 <button *ngIf='_AUTH.adminRights([4])' class="btn btn-outline-primary my-2 my-sm-0" routerLink="/homeSite/binDates" routerLinkActive="active">Update<br>Bin Dates</button>
             </li>
         </ul>        

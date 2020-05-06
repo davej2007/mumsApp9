@@ -24,8 +24,6 @@ import { AuctionSoldService }               from './components/custom/resolvers/
 import { HomeNavBarComponent }              from './components/pages/homePages/0-home-nav-bar/home-nav-bar.component';
   import { CalenderDisplayComponent }       from './components/pages/homePages/1-calender-display/calender-display.component';
   import { ListDisplayComponent }           from './components/pages/homePages/2-list-display/list-display.component';
-  import { VisitHouseComponent }            from './components/pages/homePages/3-visit-house/visit-house.component';
-  import { EstateAgentVisitComponent }      from './components/pages/homePages/4-estate-agent-visit/estate-agent-visit.component';
   import { UpdateBinDatesComponent }        from './components/pages/homePages/5-update-bin-dates/update-bin-dates.component';
   import { HomePageNotFoundComponent }      from './components/pages/homePages/9-home-page-not-found/home-page-not-found.component';
 import { VisitInfoService } from './components/custom/resolvers/visits/visit-details.service';
@@ -82,12 +80,6 @@ const routes: Routes = [
                                     canActivate : [AuthGuard],
                                     data        : { role : [2,3,4]  },
                                     resolve     : { info : VisitInfoService } },
-          { path : 'visitHouse',    component   : VisitHouseComponent,
-                                    canActivate : [AuthGuard],
-                                    data        : { role : [3,4]  } },
-          { path : 'agentVisit',    component   : EstateAgentVisitComponent,
-                                    canActivate : [AuthGuard],
-                                    data        : { role : [4]  } },
           { path : 'binDates',      component   : UpdateBinDatesComponent,
                                     canActivate : [AuthGuard],
                                     data        : { role : [4]  } },                          

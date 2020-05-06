@@ -1,30 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, Validators } from '@angular/forms';
-import { DateValue, ConvertDate, aDayIs } from 'src/app/components/custom/directive/functions';
+import { DateValue, ConvertDate, aWeekIs } from 'src/app/components/custom/directive/functions';
 import { AUTHService } from 'src/app/components/AUTH-Modules/AUTH.service';
 import { VisitsService } from 'src/app/components/services/home/visits.service';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'visit-house',
-  templateUrl: './visit-house.component.html',
-  styleUrls: ['./visit-house.component.css']
+  selector: 'estate-visit-modal-content',
+  templateUrl: `./estate-visit.html`,
+  styleUrls: ['../modal.css']
 })
-export class VisitHouseComponent implements OnInit {
+export class EstateVisitModalContent implements OnInit {
 
   constructor(
+    public activeModal: NgbActiveModal,
     private fb:FormBuilder,
     public _AUTH:AUTHService,
-    public _Visits:VisitsService,
-    public _Router:Router
-  ) { }
+    public _Visits:VisitsService) {}
+  
   // form Get
-  get date()  { return this.VisitForm.get('date');   }
-  get person()  { return this.VisitForm.get('person');   }
-  get water()  { return this.VisitForm.get('water');   }
-  get doors()  { return this.VisitForm.get('doors');   }
-  get windows()  { return this.VisitForm.get('windows');   }
-  get comments()  { return this.VisitForm.get('comments');   }
+  get date()  { return this.EstateForm.get('date');   }
+  get time()  { return this.EstateForm.get('time');   }
+  get name()  { return this.EstateForm.get('name');   }
+  get feedback()  { return this.EstateForm.get('feedback');   }
 
   ngOnInit(): void {
     let date:Date = new Date();
@@ -33,7 +31,6 @@ export class VisitHouseComponent implements OnInit {
     let currentyear:number = date.getUTCFullYear();
     this.TODAY = DateValue(new Date(currentyear, currentmonth, currentDay, 23, 59, 59));
     this.date.setValue(ConvertDate(this.TODAY))
-    this.person.setValue(this._AUTH.UserName)
   }
   // Variables
     public errorMsg       : String = '';
@@ -42,59 +39,51 @@ export class VisitHouseComponent implements OnInit {
     public TODAY          : number;
     public dateValid      : Boolean = true;
     public dateMsg        : String ='';
-
   // Form Definition
-  VisitForm = this.fb.group({
+  EstateForm = this.fb.group({
     date: [null, [Validators.required]],
-    person : ['', [Validators.required]],
-    water:['No', [Validators.required]],
-    doors:['No', [Validators.required]],
-    windows:['No', [Validators.required]],
-    comments:null
+    time: [null, [Validators.required]],
+    name : ['', [Validators.required]],    
+    feedback:null
   })
   disableForm(){
     this.processing = true;
     this.date.disable();
-    this.person.disable();
-    this.water.disable();
-    this.doors.disable();
-    this.windows.disable();
-    this.comments.disable();
+    this.time.disable();
+    this.name.disable();
+    this.feedback.disable();
   }
   enableForm(){
     this.date.enable();
-    this.person.enable();
-    this.water.enable();
-    this.doors.enable();
-    this.windows.enable();
-    this.comments.enable();
+    this.time.enable();
+    this.name.enable();
+    this.feedback.enable();
     this.processing = false;
   }
   clearForm(){
-    this.VisitForm.reset();
+    this.EstateForm.reset();
   };
   checkDate(date:string){
     let st = DateValue(new Date(2019, 10, 1));
     let d = Date.parse(date);
-    if (st<=d && d<this.TODAY + aDayIs) {
+    if (st<=d && d<this.TODAY + aWeekIs * 4) {
       this.dateValid = true;
       this.dateMsg = 'Date Ok.'
     } else {
       this.dateValid = false;
-      this.dateMsg = 'Invalid Date'
+      this.dateMsg = 'Max 4 Weeks In Future'
     }
   }
   submit(form){
     this.disableForm();
-    let newVisit = {
+    let newAgent = {
       date:DateValue(form.date),
-      person:form.person,
-      water:form.water == 'Yes',
-      windows:form.windows == 'Yes',
-      doors:form.doors == 'Yes',
-      comments:form.comments
+      type:2,
+      time:form.time,
+      name:form.name,
+      feedback:form.feedback      
     }
-    this._Visits.newVisit(newVisit).subscribe(
+    this._Visits.newVisit(newAgent).subscribe(
       data => {
         if(!data.success){            
           this.errorMsg = data.message;
@@ -103,11 +92,10 @@ export class VisitHouseComponent implements OnInit {
             this.enableForm()
           }, 2000);
         } else {
-          this.successMsg='Visit Created: ';
+          this.successMsg='Estate Agent Appointment Created: ';
           setTimeout(()=>{
             this.successMsg = '';
-            this.enableForm();
-            this.clearForm();
+            this.activeModal.close(data);
           }, 2000);
         }
       },
@@ -116,8 +104,5 @@ export class VisitHouseComponent implements OnInit {
         this.enableForm()
       }
     )
-  }
-  cancel(){
-    this._Router.navigateByUrl('/homeSite')
   }
 }

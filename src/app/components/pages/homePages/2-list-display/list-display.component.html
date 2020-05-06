@@ -1,58 +1,60 @@
 <div class="container">
-    <h1>
-      List Of Home Visits
-    </h1>
-    <hr>
-    <form>
-      <div class="form-group row">
-        <div class="col-sm-3">
-          Date Sort :
-          <button type="button" class="btn btn-outline-success" [class.active]="tableService.sortDirection == 'asc'" (click)="tableService.sortDirection = 'asc'">Earliest</button>
-          <button type="button" class="btn btn-outline-warning" [class.active]="tableService.sortDirection == 'desc'"(click)="tableService.sortDirection = 'desc'">Latest</button>
-        </div>
-        <!-- <label for="description" class="col-sm-2 col-form-label">Description search:</label>
-          <div class="col-sm-5">
-              <input name="searchTerm" [(ngModel)]="tableService.searchTerm"  class="form-control" id="description"
-              placeholder="Search ..... ">
-          </div> -->
-        <span class="sm-3" *ngIf="tableService.loading$ | async">Loading...</span>
+  <h1>
+    List Of Home Visits
+  </h1>
+  <div class="btn-group btn-group-toggle">    <!-- Year & Month -->
+    <button type="button" class="btn btn-outline-dark" [class.active]="checkDisplayDate({month:null, year:null})" (click)='tableService.displayDate = {month:null, year:null}'>All</button>
+    <button type="button" class="btn btn-outline-dark" [class.active]="checkDisplayDate(dis)" *ngFor="let dis of DisplayShow" (click)='tableService.displayDate = dis;'>{{MONTHS[dis.month]}} {{dis.year}}</button>
+  </div>
+  <hr>
+  <form>
+    <div class="form-group row">
+      <div class="col-sm-3">
+        Date Sort :
+        <button type="button" class="btn btn-outline-success" [class.active]="tableService.sortDirection == 'asc'" (click)="tableService.sortDirection = 'asc'">Earliest</button>
+        <button type="button" class="btn btn-outline-warning" [class.active]="tableService.sortDirection == 'desc'"(click)="tableService.sortDirection = 'desc'">Latest</button>
       </div>
-    </form>
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Date Listed</th>
-        <th>Person</th>
-        <th>Doors</th>
-        <th>Windows</th>
-        <th>Water</th>
-        <th>Comments</th>
-        <th>Buttons</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let entry of Visits$ | async">
-        <td>{{ entry.date | displayDate }}</td>
-        <td>{{ entry.by }}</td>
-        <td>{{ entry.checks.doors}}</td>
-        <td>{{ entry.checks.windows}}</td>
-        <td>{{ entry.checks.water}}</td>
-        <td>{{ entry.comments}}</td>
-        <td>
-          <!-- <button class="bth btn-secondary" *ngIf='_AUTH.adminRights([1])' (click)="openSold(entry)">Sold</button>
-          <button class="bth btn-danger" [routerLink]="['/ebaySite/detail', entry._id]">Details</button> -->
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="narrow d-flex justify-content-between p-2"> <!-- Pagination -->
-    <ngb-pagination
-      [collectionSize]="(total$ | async)!" [(page)]="tableService.page" [pageSize]="tableService.pageSize">
-    </ngb-pagination>
-    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="tableService.pageSize">
-      <option [ngValue]="5">5 items per page</option>
-      <option [ngValue]="10">10 items per page</option>
-      <option [ngValue]="15">15 items per page</option>
-    </select>
-  </div>
+      <div class='col-sm-5'>
+        <button type="button" class="btn btn-outline-success" (click)="openNewHouseVisit()">New House Visit</button>
+        <button type="button" class="btn btn-outline-warning" (click)="openNewEstateVisit()">New Estate Agent Appointment</button>
+      </div>
+      <span class="sm-3" *ngIf="tableService.loading$ | async">Loading...</span>
+    </div>
+  </form>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date Listed</th>
+      <th>Person<br>Time</th>
+      <th>Doors : Windows : Water<br>Name</th>
+      <th>Comments<br>Feedback</th>
+      <th>Buttons</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entry of Visits$ | async">
+      <td [ngClass]="getCustomCss(entry.type)"> {{ entry.date | displayDate }}</td>
+      <td *ngIf='entry.type==1' class='home'>   {{ entry.home.by }}</td>
+      <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.time }}</td>
+      <td *ngIf='entry.type==1' class='home'>   {{ entry.home.checks | displayChecks}}</td>
+      <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.name }}</td>
+      <td *ngIf='entry.type==1' class='home'>   {{ entry.home.comments}}</td>
+      <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.feedback }}</td>
+      <td>
+        <!-- <button class="bth btn-secondary" *ngIf='_AUTH.adminRights([1])' (click)="openSold(entry)">Sold</button>
+        <button class="bth btn-danger" [routerLink]="['/ebaySite/detail', entry._id]">Details</button> -->
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="narrow d-flex justify-content-between p-2"> <!-- Pagination -->
+  <ngb-pagination
+    [collectionSize]="(total$ | async)!" [(page)]="tableService.page" [pageSize]="tableService.pageSize">
+  </ngb-pagination>
+  <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="tableService.pageSize">
+    <option [ngValue]="5">5 items per page</option>
+    <option [ngValue]="10">10 items per page</option>
+    <option [ngValue]="15">15 items per page</option>
+  </select>
+</div>

@@ -3,10 +3,10 @@ import { IDISPLAYDATE } from 'src/app/components/custom/interface/state';
 import { Months, Days, aDayIs, DateValue, aWeekIs } from 'src/app/components/custom/directive/functions';
 
 export interface IDAY {
-  date:number,
-  visit : Array<string>,
-  agent : Array<string>,
-  bins  : Array<string>
+  date  	: number,
+  visit   : Array<string>,
+  agent   : Array<string>,
+  bins    : Array<string>
 }
 
 @Component({
@@ -22,10 +22,10 @@ export class CalenderDisplayComponent implements OnInit {
   public DisplayMonth : IDISPLAYDATE;
   public MONTHS       : Array<string> = Months;
   public DAYS         : Array<string> = Days;
-  public monthBegins:number;
-  public monthEnds:number;
-  public WEEKS : Array<any> = [];
-  public TODAY :number;
+  public monthBegins  : number;
+  public monthEnds    : number;
+  public WEEKS        : Array<any> = [];
+  public TODAY        : number;
   
   ngOnInit(): void {
     let date:Date = new Date();
@@ -85,7 +85,5 @@ export class CalenderDisplayComponent implements OnInit {
       this.WEEKS.push(weekData);
       wc = wc + aWeekIs;      
     }
-    console.log(new Date(this.monthBegins), new Date(this.monthEnds))
-    console.log(this.WEEKS);
   }
 }

@@ -37,7 +37,6 @@ export class MonthlyTotalsComponent implements OnInit {
   public StatusList   : any = STATUS;
   public CategoryList : any = CATEGORIES;
   public DisplayShow  : Array<IDISPLAYDATE>= [];
-  // public display      : IDISPLAYDATE = { month: null, year: null }
   public MONTHS       : Array<string> = Months
   
   ngOnInit(): void {
@@ -55,7 +54,6 @@ export class MonthlyTotalsComponent implements OnInit {
         m++
       }
     }
-
     this.activatedRoute.data.subscribe(
       data=>{
         if(data.info.success){
@@ -69,16 +67,6 @@ export class MonthlyTotalsComponent implements OnInit {
       }
     )
   }
-
-  // onSort({column, direction}: SortEvent) {
-  //   // resetting other headers
-  //   this.headers.forEach(header => {
-  //     if (header.sortable !== column) {
-  //       header.direction = '';
-  //     }
-  //   });
-  //   this.tableService.sortDirection = direction;
-  // }
   checkDisplayDate(en:any){
     if(this.tableService.displayDate.month == en.month && this.tableService.displayDate.year == en.year){
       return true

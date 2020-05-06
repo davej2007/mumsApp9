@@ -1,0 +1,13 @@
+.modal-header {
+    background-color: slategray;
+    padding: 30px;
+    color :red;
+    text-align: center;
+}
+
+.form-check-input{
+    padding-top:7px;
+    margin:0;
+    height:1.75rem;
+    width:1.75rem
+}

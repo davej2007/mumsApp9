@@ -28,8 +28,6 @@ import { EbayPageNotFoundComponent }      from './components/pages/ebayPages/9-e
 // Home Pages
 import { HomeNavBarComponent }            from './components/pages/homePages/0-home-nav-bar/home-nav-bar.component';
 import { CalenderDisplayComponent }       from './components/pages/homePages/1-calender-display/calender-display.component';
-import { VisitHouseComponent }            from './components/pages/homePages/3-visit-house/visit-house.component';
-import { EstateAgentVisitComponent }      from './components/pages/homePages/4-estate-agent-visit/estate-agent-visit.component';
 import { UpdateBinDatesComponent }        from './components/pages/homePages/5-update-bin-dates/update-bin-dates.component';
 import { HomePageNotFoundComponent }      from './components/pages/homePages/9-home-page-not-found/home-page-not-found.component';
 
@@ -50,6 +48,9 @@ import { PaidModalContent }               from './components/pages/ebayPages/MOD
 import { DeliveryModalContent }           from './components/pages/ebayPages/MODALS/5-Delivery/delivery';
 import { PostModalContent }               from './components/pages/ebayPages/MODALS/4-Post/post';
 import { ListDisplayComponent } from './components/pages/homePages/2-list-display/list-display.component';
+import { HomeVisitModalContent } from './components/pages/homePages/MODALS/1-home-visit/home-visit';
+import { EstateVisitModalContent } from './components/pages/homePages/MODALS/2-estate-visit/estate-visit';
+import { DisplayChecksPipe } from './components/custom/pipe/display-checks.pipe';
 
 @NgModule({
   declarations: [
@@ -68,11 +69,19 @@ import { ListDisplayComponent } from './components/pages/homePages/2-list-displa
       AuctionDetailsComponent,
       EditAuctionComponent,
       EbayPageNotFoundComponent,
+    HomeNavBarComponent,
+      HomePageNotFoundComponent,
+      CalenderDisplayComponent,
+      ListDisplayComponent,
+      UpdateBinDatesComponent,
+      
     // pipes
     DisplayPoundsPipe,
     ChooseDatePipe,
     DisplayWeightPipe,
     DisplayDatePipe,
+    DisplayTotalIncomePipe,
+    DisplayFeesPipe,
     // Modals
     NewAuctionModalContent,
     UnSoldModalContent,
@@ -80,15 +89,9 @@ import { ListDisplayComponent } from './components/pages/homePages/2-list-displa
     PaidModalContent,
     PostModalContent,
     DeliveryModalContent,
-    DisplayTotalIncomePipe,
-    DisplayFeesPipe,
-    HomeNavBarComponent,
-    HomePageNotFoundComponent,
-    CalenderDisplayComponent,
-    VisitHouseComponent,
-    EstateAgentVisitComponent,
-    UpdateBinDatesComponent,
-    ListDisplayComponent
+    HomeVisitModalContent,
+    EstateVisitModalContent,
+    DisplayChecksPipe    
   ],
   imports: [
     BrowserModule,
@@ -107,7 +110,9 @@ import { ListDisplayComponent } from './components/pages/homePages/2-list-displa
     SoldModalContent,
     PaidModalContent,
     PostModalContent,
-    DeliveryModalContent
+    DeliveryModalContent,
+    HomeVisitModalContent,
+    EstateVisitModalContent
   ],
   providers: [
     DecimalPipe,

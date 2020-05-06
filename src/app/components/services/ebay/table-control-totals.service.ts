@@ -6,8 +6,8 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 
 import { SortDirection } from 'src/app/components/custom/directive/sortable.directive';
 
-import { IAUCTION } from 'src/app/components/custom/interface/auction';
-import { IASTATE, IASEARCHRESULT, IDISPLAYDATE } from 'src/app/components/custom/interface/state';
+import { IAUCTION, IASTATE, IASEARCHRESULT } from 'src/app/components/custom/interface/auction';
+import { IDISPLAYDATE } from 'src/app/components/custom/interface/state';
 
 const compare = (v1: number, v2: number) => v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 

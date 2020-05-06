@@ -5,8 +5,8 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 
 import { SortDirection }                        from 'src/app/components/custom/directive/sortable.directive';
-import { IVISIT }                               from 'src/app/components/custom/interface/visit';
-import { IVSTATE, IVSEARCHRESULT, IDISPLAYDATE }  from 'src/app/components/custom/interface/state';
+import { IVISIT, IVSTATE, IVSEARCHRESULT }      from 'src/app/components/custom/interface/visit';
+import { IDISPLAYDATE }                         from 'src/app/components/custom/interface/state';
 
 @Injectable({providedIn: 'root'})
 
@@ -19,7 +19,7 @@ export class VisitTableControlService {
   private _state: IVSTATE = {
     page: 1,
     pageSize: 10,
-    sortDirection: 'desc',
+    sortDirection: 'asc',
     displayDate : {month:null, year:null}
   };
 
@@ -63,7 +63,8 @@ export class VisitTableControlService {
 
     // 1. sort
     let entries = sort(this.VISITS, sortDirection);
-
+    // 2. filter
+    entries = entries.filter(entry => displayDateCheck(entry, this.displayDate));
     const total = entries.length;
     // 3. paginate
     entries = entries.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
@@ -81,4 +82,22 @@ function sort(entries: IVISIT[],  direction: string): IVISIT[] {
       return direction === 'asc' ? res : -res;
     });
   }
+}
+function displayDateCheck(entry:IVISIT, dd:IDISPLAYDATE){
+  if(dd.month==null && dd.year==null) {
+    return true;
+  } else {
+    let startDate:number = 0; let finishDate = 0;
+    startDate=Date.parse(new Date(dd.year, dd.month).toString());
+    if(dd.month==11){
+      finishDate=Date.parse(new Date(dd.year+1, 0).toString())-86400000/2
+    } else {
+      finishDate=Date.parse(new Date(dd.year, dd.month+1).toString())-86400000/2
+    }
+    if(startDate<= entry.date && finishDate>=entry.date){
+      return true;
+    } else {
+      return false
+    }
+  };
 }
