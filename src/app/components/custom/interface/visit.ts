@@ -4,6 +4,7 @@ import { IDISPLAYDATE } from './state';
 export interface IVISIT {
   _id         : String,
   date        : number,
+  type        : number,
   home        : IHOME,
   agent       : IAGENT,
   bins        : IBIN

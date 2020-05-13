@@ -13,7 +13,7 @@ export function ConvertDate(dateValue:number):string{
 export function DateValue(value:any):number{
     if (value==undefined || value==null || value=='' || value ==0) {
         return Date.parse(new Date().toDateString());
-    }else {
+    } else {
         return Date.parse(new Date(value).toDateString());
     }
 }

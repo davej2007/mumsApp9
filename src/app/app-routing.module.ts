@@ -27,6 +27,7 @@ import { HomeNavBarComponent }              from './components/pages/homePages/0
   import { UpdateBinDatesComponent }        from './components/pages/homePages/5-update-bin-dates/update-bin-dates.component';
   import { HomePageNotFoundComponent }      from './components/pages/homePages/9-home-page-not-found/home-page-not-found.component';
 import { VisitInfoService } from './components/custom/resolvers/visits/visit-details.service';
+import { BinInfoService } from './components/custom/resolvers/visits/visit-bin.service';
 
 const routes: Routes = [
   { path:'',                      component   : WelcomeToTheSiteComponent,
@@ -44,7 +45,7 @@ const routes: Routes = [
                                     resolve     : { info : AuctionInfoService }  },
           { path : 'sold',          component   : SoldTableComponent,
                                     canActivate : [AuthGuard],
-                                    data        : {role : [1], status: [2,3,4,5]  },
+                                    data        : {role : [0,1], status: [2,3,4,5]  },
                                     resolve     : { info : AuctionInfoService }  },
           { path : 'ebayFees',      component   : EbayFeesComponent,
                                     canActivate : [AuthGuard],
@@ -58,7 +59,7 @@ const routes: Routes = [
                                     resolve     : { info : AuctionUnDeliveredService } },
           { path : 'detail/:id',    component   : AuctionDetailsComponent,
                                     canActivate : [AuthGuard],
-                                    data        : {role : [1]},
+                                    data        : {role : [0,1]},
                                     resolve     : {info : AuctionDetailService}},
           { path : 'edit/:id',      component   : EditAuctionComponent,
                                     canActivate : [AuthGuard],
@@ -82,7 +83,8 @@ const routes: Routes = [
                                     resolve     : { info : VisitInfoService } },
           { path : 'binDates',      component   : UpdateBinDatesComponent,
                                     canActivate : [AuthGuard],
-                                    data        : { role : [4]  } },                          
+                                    data        : { role : [4]  },
+                                    resolve     : { info : BinInfoService } },                          
     { path : '',                    redirectTo  : '/homeSite/calender', pathMatch: 'full' },
     { path : '**',                  component   : HomePageNotFoundComponent}
 ]},

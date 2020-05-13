@@ -64,5 +64,5 @@
             </tr>
         </tbody>
     </table>
-    <button class="bth btn-danger" [routerLink]="['/ebaySite/edit', AUCTION._id]">Edit</button>
+    <button class="bth btn-danger" *ngIf='_AUTH.adminRights([1])' [routerLink]="['/ebaySite/edit', AUCTION._id]">Edit</button>
 </div>

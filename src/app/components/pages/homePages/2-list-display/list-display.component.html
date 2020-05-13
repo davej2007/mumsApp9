@@ -37,10 +37,15 @@
       <td [ngClass]="getCustomCss(entry.type)"> {{ entry.date | displayDate }}</td>
       <td *ngIf='entry.type==1' class='home'>   {{ entry.home.by }}</td>
       <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.time }}</td>
+      <td *ngIf='entry.type==3' class='bins' >  bins</td>
+      
       <td *ngIf='entry.type==1' class='home'>   {{ entry.home.checks | displayChecks}}</td>
       <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.name }}</td>
+      <td *ngIf='entry.type==3' class='bins' >  {{ entry.bins.type }}</td>
+      
       <td *ngIf='entry.type==1' class='home'>   {{ entry.home.comments}}</td>
       <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.feedback }}</td>
+      <td *ngIf='entry.type==3' class='bins' >  bins</td>
       <td>
         <!-- <button class="bth btn-secondary" *ngIf='_AUTH.adminRights([1])' (click)="openSold(entry)">Sold</button>
         <button class="bth btn-danger" [routerLink]="['/ebaySite/detail', entry._id]">Details</button> -->
@@ -53,8 +58,9 @@
     [collectionSize]="(total$ | async)!" [(page)]="tableService.page" [pageSize]="tableService.pageSize">
   </ngb-pagination>
   <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="tableService.pageSize">
-    <option [ngValue]="5">5 items per page</option>
     <option [ngValue]="10">10 items per page</option>
     <option [ngValue]="15">15 items per page</option>
+    <option [ngValue]="20">20 items per page</option>
+    <option [ngValue]="25">25 items per page</option>
   </select>
 </div>

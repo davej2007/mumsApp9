@@ -1,1 +1,36 @@
-<p>update-bin-dates works!</p>
+<div class="container">
+    <h1>Update Bin Day Dates</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Type Of Collection</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let entry of Visits$ | async">
+            <td>{{ entry.date | date:'EEEE' }}</td>
+            <td>{{ entry.date | displayDate }}</td>
+            <td>{{ entry.bins.type }}</td>
+        </tr>
+    </tbody>
+</table>
+<form>
+    <!-- date -->
+    <div class="form-group row">
+        <label for="date" class="col-sm-3 col-form-label">Date</label>
+        <div class="col-sm-9">
+            <input
+             [(ngModel)]='dateInput' type="date" class="form-control" id='date' name="date"
+            placeholder="Date">
+            {{ dateInput }}
+        </div>
+    </div>
+    <button type="button" class="btn btn-outline-dark"(click)='addAWeek()'>+ A Week</button>
+    <button type="button" class="btn btn-outline-dark"(click)='submitRecycle(dateInput)'>Recycling</button>
+    <button type="button" class="btn btn-outline-dark"(click)='submitBins(dateInput)'>Black Bins</button>
+</form>
+</div>
+<!-- [class.is-invalid]='(date.invalid || !dateValid) && date.touched' [class.is-valid]='date.valid && date.touched && dateValid' -->
+            

@@ -12,6 +12,7 @@ import { AuctionService } from 'src/app/components/services/ebay/auction.service
 import { PaidModalContent } from '../MODALS/3-Paid/paid';
 import { PostModalContent } from '../MODALS/4-Post/post';
 import { DeliveryModalContent } from '../MODALS/5-Delivery/delivery';
+import { AUTHService } from 'src/app/components/AUTH-Modules/AUTH.service';
 
 @Component({
   selector: 'sold-table',
@@ -28,6 +29,7 @@ export class SoldTableComponent implements OnInit {
     private activatedRoute:ActivatedRoute,
     public modalService: NgbModal,
     public _auction:AuctionService,
+    public _AUTH:AUTHService,
     public _Router:Router
     ) {
       this.Auctions$ = tableService.auctions$;

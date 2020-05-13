@@ -7,11 +7,11 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { SortDirection }                        from 'src/app/components/custom/directive/sortable.directive';
 import { IVISIT, IVSTATE, IVSEARCHRESULT }      from 'src/app/components/custom/interface/visit';
 import { IDISPLAYDATE }                         from 'src/app/components/custom/interface/state';
-import { aDayIs } from '../../custom/directive/functions';
+import { aDayIs }                               from '../../custom/directive/functions';
 
 @Injectable({providedIn: 'root'})
 
-export class VisitTableControlService {
+export class BinTableControlService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _visits$ = new BehaviorSubject<IVISIT[]>([]);
@@ -68,7 +68,7 @@ export class VisitTableControlService {
     entries = entries.filter(entry => displayDateCheck(entry, this.displayDate));
     const total = entries.length;
     // 3. paginate
-    entries = entries.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    entries = entries.slice(-10);
     return of({entries, total});
   }
 }

@@ -64,9 +64,9 @@
             <td>{{ entry.fee | displayFees }}</td>
             <td>{{ entry | displayTotalIncome }}</td>
             <td>       
-            <button class="bth btn-secondary btn-sm" *ngIf='[2].indexOf(entry.status) != -1' (click)="openPaid(entry)">Paid</button>
-            <button class="bth btn-secondary btn-sm" *ngIf='[3].indexOf(entry.status) != -1' (click)="openPost(entry)">Post</button>
-            <button class="bth btn-secondary btn-sm" *ngIf='[4].indexOf(entry.status) != -1' (click)="openDelivery(entry)">Delivered</button>
+            <button class="bth btn-secondary btn-sm" *ngIf='[2].indexOf(entry.status) != -1 && _AUTH.adminRights([1])' (click)="openPaid(entry)">Paid</button>
+            <button class="bth btn-secondary btn-sm" *ngIf='[3].indexOf(entry.status) != -1 && _AUTH.adminRights([1])' (click)="openPost(entry)">Post</button>
+            <button class="bth btn-secondary btn-sm" *ngIf='[4].indexOf(entry.status) != -1 && _AUTH.adminRights([1])' (click)="openDelivery(entry)">Delivered</button>
             <button class="bth btn-danger btn-sm" [routerLink]="['/ebaySite/detail', entry._id]">Details</button>
             </td>
     </tr>

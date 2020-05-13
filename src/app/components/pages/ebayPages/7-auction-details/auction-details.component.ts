@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuctionService } from 'src/app/components/services/ebay/auction.service';
 import { IAUCTION } from 'src/app/components/custom/interface/auction';
 import { STATUS, CATEGORIES } from 'src/app/components/custom/directive/defaultValues';
+import { AUTHService } from 'src/app/components/AUTH-Modules/AUTH.service';
 
 @Component({
   selector: 'auction-details',
@@ -13,7 +14,8 @@ export class AuctionDetailsComponent implements OnInit {
 
   constructor(
     private activatedRoute:ActivatedRoute,    
-    public _Auction:AuctionService) { }
+    public _Auction:AuctionService,
+    public _AUTH:AUTHService) { }
 
   // Variables
   public processing:Boolean = false;

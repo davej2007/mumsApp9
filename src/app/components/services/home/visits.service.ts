@@ -24,4 +24,7 @@ export class VisitsService {
   getVisitsDetails(){
     return this._HTTP.get<any>(environment.apiVisits+'/getVisitsInfo')
   }
+  getBinDateDetails(){
+    return this._HTTP.get<any>(environment.apiVisits+'/getBinDateInfo')
+  }
 }
