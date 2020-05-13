@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title">Estate Agent Appointment</h4>
+    <h4 class="modal-title">{{ estate }} Estate Agent Appointment</h4>
   </div>
   <div class="modal-body">
     <form [formGroup]='EstateForm'>
@@ -48,7 +48,9 @@
   </div>
   <div class="modal-footer">
     <div *ngIf='!successMsg && !errorMsg'>
-        <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="submit(EstateForm.value)">Save</button>
+        <button type="button" class="btn btn-outline-success" *ngIf='estate=="New "' [disabled]='processing' (click)="submit(EstateForm.value)">Save</button>
+        <button type="button" class="btn btn-outline-primary" *ngIf='estate=="Update "' [disabled]='processing' (click)="update(EstateForm.value)">Update</button>
+        <button type="button" class="btn btn-outline-danger" *ngIf='estate=="Update "' [disabled]='processing' (click)="delete()">Delete</button>
         <button type="button" class="btn btn-outline-dark" [disabled]='processing' (click)="activeModal.dismiss('Cancel')">Cancel</button>
     </div>
     <div class='messages'> <!-- messages -->

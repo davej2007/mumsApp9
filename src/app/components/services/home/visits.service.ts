@@ -27,4 +27,15 @@ export class VisitsService {
   getBinDateDetails(){
     return this._HTTP.get<any>(environment.apiVisits+'/getBinDateInfo')
   }
+  getVisitById(id:String){
+    return this._HTTP.post<any>(environment.apiVisits+'/getVisitInfoById',{id:id})
+  }
+  updateVisitById(id:String, visit:any){
+    return this._HTTP.post<any>(environment.apiVisits+'/updateVisitInfoById',{id:id,visit})
+  }
+  deleteVisitById(id:String){
+    return this._HTTP.post<any>(environment.apiVisits+'/deleteVisitInfoById',{id:id})
+  
+  }
+
 }

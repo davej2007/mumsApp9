@@ -80,6 +80,8 @@ export class ListDisplayComponent implements OnInit {
   }
   openNewHouseVisit(){
     const modalRef = this.modalService.open(HomeVisitModalContent, {backdrop:'static', size:'lg'});
+    modalRef.componentInstance.id = null;
+    modalRef.componentInstance.home = 'New ';
     modalRef.result.then(
       res => {
         if(res.success){
@@ -91,9 +93,41 @@ export class ListDisplayComponent implements OnInit {
       reason => { console.log('New House Visit Cancelled.') }
     );
   }
+  EditHomeVisit(entry){
+    const modalRef = this.modalService.open(HomeVisitModalContent, {backdrop:'static', size:'lg'});
+    modalRef.componentInstance.id = entry._id;
+    modalRef.componentInstance.home = 'Edit ';
+    modalRef.result.then(
+      res => {
+        if(res.success){
+          this.reloadTableData()
+        } else {
+          console.log('Error from Modal : ', res)
+        }
+      },
+      reason => { console.log('Edit House Visit Cancelled.') }
+    );
+  }
   openNewEstateVisit(){
     const modalRef = this.modalService.open(EstateVisitModalContent, {backdrop:'static', size:'lg'});
-     modalRef.result.then(
+    modalRef.componentInstance.id = null;
+    modalRef.componentInstance.estate = 'New ';    
+    modalRef.result.then(
+      res => {
+        if(res.success){
+          this.reloadTableData()
+        } else {
+          console.log('Error from Modal : ', res)
+        }
+      },
+      reason => { console.log('New Estate Visit Cancelled.') }
+    );
+  }
+  UpdateEstateVisit(entry){
+    const modalRef = this.modalService.open(EstateVisitModalContent, {backdrop:'static', size:'lg'});
+    modalRef.componentInstance.id = entry._id;
+    modalRef.componentInstance.estate = 'Update ';
+    modalRef.result.then(
       res => {
         if(res.success){
           this.reloadTableData()
@@ -118,5 +152,8 @@ export class ListDisplayComponent implements OnInit {
       },
       err=>{console.log(err)}
       )
+  }
+  HideBin(entry){
+    console.log('Hide Bin Visit', entry)
   }
 }

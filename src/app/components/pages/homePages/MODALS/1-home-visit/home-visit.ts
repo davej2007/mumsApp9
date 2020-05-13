@@ -11,7 +11,8 @@ import { VisitsService } from 'src/app/components/services/home/visits.service';
   styleUrls: ['../modal.css']
 })
 export class HomeVisitModalContent implements OnInit {
-
+  @Input() id:String;
+  @Input() home:String;
   constructor(
     public activeModal: NgbActiveModal,
     private fb:FormBuilder,
@@ -31,8 +32,25 @@ export class HomeVisitModalContent implements OnInit {
     let currentmonth:number = date.getMonth();
     let currentyear:number = date.getUTCFullYear();
     this.TODAY = DateValue(new Date(currentyear, currentmonth, currentDay, 23, 59, 59));
-    this.date.setValue(ConvertDate(this.TODAY))
-    this.person.setValue(this._AUTH.UserName)
+    if (this.id == null){
+      this.date.setValue(ConvertDate(this.TODAY))
+      this.person.setValue(this._AUTH.UserName)
+    } else {
+      this._Visits.getVisitById(this.id).subscribe(
+        res=>{
+          if(!res.success){
+            this.errorMsg = res.message
+          } else {
+            this.date.setValue(ConvertDate(res.visit.date))
+            this.person.setValue(res.visit.home.by)
+            if (res.visit.home.checks.water) this.water.setValue('Yes')
+            if (res.visit.home.checks.doors) this.doors.setValue('Yes')
+            if (res.visit.home.checks.windows) this.windows.setValue('Yes')
+            if (res.visit.home.comments != 'n/a') this.comments.setValue(res.visit.home.comments)
+          }
+        }
+      )
+    }
   }
   // Variables
     public errorMsg       : String = '';
@@ -109,6 +127,63 @@ export class HomeVisitModalContent implements OnInit {
           }, 2000);
         } else {
           this.successMsg='Visit Created: ';
+          setTimeout(()=>{
+            this.successMsg = '';
+            this.activeModal.close(data);
+          }, 2000);
+        }
+      },
+      err => {
+        alert('Server Error : '+err.message+' If this continues Please contact Systems.');
+        this.enableForm()
+      }
+    )
+  }
+  update(form){
+    this.disableForm();
+    let updateVisit = {
+      date:DateValue(form.date),
+      type:1,
+      person:form.person,
+      water:form.water == 'Yes',
+      windows:form.windows == 'Yes',
+      doors:form.doors == 'Yes',
+      comments:form.comments
+    }
+    this._Visits.updateVisitById(this.id, updateVisit).subscribe(
+      data => {
+        if(!data.success){            
+          this.errorMsg = data.message;
+          setTimeout(()=>{
+            this.errorMsg = '';
+            this.enableForm()
+          }, 2000);
+        } else {
+          this.successMsg='Visit Updated: ';
+          setTimeout(()=>{
+            this.successMsg = '';
+            this.activeModal.close(data);
+          }, 2000);
+        }
+      },
+      err => {
+        alert('Server Error : '+err.message+' If this continues Please contact Systems.');
+        this.enableForm()
+      }
+    )
+  }
+  delete(){
+    this.disableForm();
+    this._Visits.deleteVisitById(this.id).subscribe(
+      data => {
+        if(!data.success){            
+          this.errorMsg = data.message;
+          setTimeout(()=>{
+            this.errorMsg = '';
+            this.enableForm()
+          }, 2000);
+        } else {
+          this.successMsg='Visit Deleted: ';
           setTimeout(()=>{
             this.successMsg = '';
             this.activeModal.close(data);

@@ -11,7 +11,8 @@ import { VisitsService } from 'src/app/components/services/home/visits.service';
   styleUrls: ['../modal.css']
 })
 export class EstateVisitModalContent implements OnInit {
-
+  @Input() id:String;
+  @Input() estate:String;
   constructor(
     public activeModal: NgbActiveModal,
     private fb:FormBuilder,
@@ -30,7 +31,22 @@ export class EstateVisitModalContent implements OnInit {
     let currentmonth:number = date.getMonth();
     let currentyear:number = date.getUTCFullYear();
     this.TODAY = DateValue(new Date(currentyear, currentmonth, currentDay, 23, 59, 59));
-    this.date.setValue(ConvertDate(this.TODAY))
+    if (this.id == null){
+      this.date.setValue(ConvertDate(this.TODAY))
+    } else {
+      this._Visits.getVisitById(this.id).subscribe(
+        res=>{
+          if(!res.success){
+            this.errorMsg = res.message
+          } else {
+            this.date.setValue(ConvertDate(res.visit.date))
+            this.time.setValue(res.visit.agent.time)
+            if(res.visit.agent.name!='n/a') this.name.setValue(res.visit.agent.name)
+            if(res.visit.agent.feedback!='n/a') this.feedback.setValue(res.visit.agent.feedback)
+          }
+        }
+      )
+    }
   }
   // Variables
     public errorMsg       : String = '';
@@ -74,7 +90,7 @@ export class EstateVisitModalContent implements OnInit {
       this.dateMsg = 'Max 4 Weeks In Future'
     }
   }
-  submit(form){
+  submit(form:any){
     this.disableForm();
     let newAgent = {
       date:DateValue(form.date),
@@ -93,6 +109,61 @@ export class EstateVisitModalContent implements OnInit {
           }, 2000);
         } else {
           this.successMsg='Estate Agent Appointment Created: ';
+          setTimeout(()=>{
+            this.successMsg = '';
+            this.activeModal.close(data);
+          }, 2000);
+        }
+      },
+      err => {
+        alert('Server Error : '+err.message+' If this continues Please contact Systems.');
+        this.enableForm()
+      }
+    )
+  }
+  update(form:any){
+    this.disableForm();
+    let updateVisit = {
+      date:DateValue(form.date),
+      type:2,
+      time:form.time,
+      name:form.name,
+      feedback:form.feedback
+    }
+    this._Visits.updateVisitById(this.id, updateVisit).subscribe(
+      data => {
+        if(!data.success){            
+          this.errorMsg = data.message;
+          setTimeout(()=>{
+            this.errorMsg = '';
+            this.enableForm()
+          }, 2000);
+        } else {
+          this.successMsg='Visit Updated: ';
+          setTimeout(()=>{
+            this.successMsg = '';
+            this.activeModal.close(data);
+          }, 2000);
+        }
+      },
+      err => {
+        alert('Server Error : '+err.message+' If this continues Please contact Systems.');
+        this.enableForm()
+      }
+    )
+  }
+  delete(){
+    this.disableForm();
+    this._Visits.deleteVisitById(this.id).subscribe(
+      data => {
+        if(!data.success){            
+          this.errorMsg = data.message;
+          setTimeout(()=>{
+            this.errorMsg = '';
+            this.enableForm()
+          }, 2000);
+        } else {
+          this.successMsg='Agent Visit Deleted: ';
           setTimeout(()=>{
             this.successMsg = '';
             this.activeModal.close(data);

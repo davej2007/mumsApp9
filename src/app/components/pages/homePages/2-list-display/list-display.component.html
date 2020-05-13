@@ -25,7 +25,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Date Listed</th>
+      <th>Date</th>
       <th>Person<br>Time</th>
       <th>Doors : Windows : Water<br>Name</th>
       <th>Comments<br>Feedback</th>
@@ -34,7 +34,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let entry of Visits$ | async">
-      <td [ngClass]="getCustomCss(entry.type)"> {{ entry.date | displayDate }}</td>
+      <td [ngClass]="getCustomCss(entry.type)">{{ entry.date | date:'EEEE' }} - {{ entry.date | displayDate }}</td>
       <td *ngIf='entry.type==1' class='home'>   {{ entry.home.by }}</td>
       <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.time }}</td>
       <td *ngIf='entry.type==3' class='bins' >  bins</td>
@@ -46,9 +46,15 @@
       <td *ngIf='entry.type==1' class='home'>   {{ entry.home.comments}}</td>
       <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.feedback }}</td>
       <td *ngIf='entry.type==3' class='bins' >  bins</td>
-      <td>
-        <!-- <button class="bth btn-secondary" *ngIf='_AUTH.adminRights([1])' (click)="openSold(entry)">Sold</button>
-        <button class="bth btn-danger" [routerLink]="['/ebaySite/detail', entry._id]">Details</button> -->
+
+      <td *ngIf='entry.type==1 && _AUTH.adminRights([2])' class='home'>
+        <button class="bth btn-primary" (click)="EditHomeVisit(entry)">Edit</button>
+      </td>
+      <td *ngIf='entry.type==2 && _AUTH.adminRights([3])' class='agent'>
+        <button class="bth btn-danger" (click)="UpdateEstateVisit(entry)">Update</button>
+      </td>
+      <td *ngIf='entry.type==3 && _AUTH.adminRights([4])' class='bins' >
+        <button class="bth btn-secondary" (click)="HideBin(entry)">Hide</button>
       </td>
     </tr>
   </tbody>
