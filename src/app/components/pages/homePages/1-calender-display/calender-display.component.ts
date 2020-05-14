@@ -4,6 +4,8 @@ import { Months, Days, aDayIs, DateValue, aWeekIs } from 'src/app/components/cus
 import { IVISIT } from 'src/app/components/custom/interface/visit';
 import { ActivatedRoute } from '@angular/router';
 import { element } from 'protractor';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CalenderDetailsModalContent } from '../MODALS/3-calender-details/calender-details';
 
 export interface IDAY {
   date  	: number,
@@ -20,7 +22,8 @@ export interface IDAY {
 export class CalenderDisplayComponent implements OnInit {
 
   constructor(
-    private activatedRoute:ActivatedRoute) { }
+    private activatedRoute:ActivatedRoute,
+    public modalService: NgbModal) { }
 
   public DisplayShow  : Array<IDISPLAYDATE>= [];
   public DisplayMonth : IDISPLAYDATE;
@@ -85,13 +88,29 @@ export class CalenderDisplayComponent implements OnInit {
     return 'NotCurrent'
   }
   getCustomColor(type:String){
-    console.log(type)
     if(type=='Dave') return 'dave'
     if(type=='Jacky') return 'jacky'
     if(type=='Andrew') return 'andrew'
     if(type=='Recycling') return 'recycling'
     if(type=='Black Bins & Recycling') return 'black'
-
+    return ''
+  }
+  details(details:any){
+    let entries:Array<String> = [];
+    details.visit.map(e => { entries.push(e.id) });
+    details.agent.map(e => { entries.push(e.id) });
+    details.bins.map(e => { entries.push(e.id) });
+    if(entries.length!=0){
+      const modalRef = this.modalService.open(CalenderDetailsModalContent, {backdrop:'static', size:'lg'});
+      modalRef.componentInstance.date = details.date;
+      modalRef.componentInstance.entries = entries;
+      modalRef.result.then(
+        res => {
+            console.log('Error from Modal : ', res)
+        },
+        reason => { console.log('Details Visit Cancelled.') }
+      );
+    }
   }
   reloadMonth(start:IDISPLAYDATE){
     this.WEEKS = [];
@@ -119,7 +138,6 @@ export class CalenderDisplayComponent implements OnInit {
       this.WEEKS.push(weekData);
       wc = wc + aWeekIs;      
     }
-    console.log(this.WEEKS)
   }
   FindEntries = function(visits:Array<IVISIT>, date:Number) {
     let result:Array<IVISIT> = [];

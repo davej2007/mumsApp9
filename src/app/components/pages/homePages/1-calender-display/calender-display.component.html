@@ -16,7 +16,7 @@
   <tbody>
     <tr *ngFor='let week of WEEKS'>
         <th>{{ week.weekCommence | displayDate }}</th>
-        <td *ngFor='let day of week.Days' [ngClass]="getCustomCss(day.date)">
+        <td *ngFor='let day of week.Days' [ngClass]="getCustomCss(day.date)" (click)='details(day)'>
           <p>{{ day.date | date:'dd MMM' }}</p>
             <p *ngFor='let home of day.visit' [ngClass]="getCustomColor(home.name)">{{ home.name }}</p>
             <p *ngFor='let agent of day.agent' [ngClass]="getCustomColor(agent.time)">{{ agent.time }}</p>

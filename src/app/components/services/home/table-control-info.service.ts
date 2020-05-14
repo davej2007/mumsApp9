@@ -19,7 +19,7 @@ export class VisitTableControlService {
 
   private _state: IVSTATE = {
     page: 1,
-    pageSize: 10,
+    pageSize: 20,
     sortDirection: 'asc',
     displayDate : {month:null, year:null}
   };

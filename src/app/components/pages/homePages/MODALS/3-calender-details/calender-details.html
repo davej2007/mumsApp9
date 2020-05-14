@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4 class="modal-title">Date Details : {{ date | date:'EEEE' }}-{{ date | displayDate }}</h4>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Person/Time</th>
+          <th>Doors : Windows : Water/Name</th>
+          <th>Comments/Feedback</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of EntryList">
+          <td *ngIf='entry.type==1' class='home'>   {{ entry.home.by }}</td>
+          <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.time }}</td>
+          <td *ngIf='entry.type==3' class='bins' >  bins</td>
+          
+          <td *ngIf='entry.type==1' class='home'>   {{ entry.home.checks | displayChecks}}</td>
+          <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.name }}</td>
+          <td *ngIf='entry.type==3' class='bins' >  {{ entry.bins.type }}</td>
+          
+          <td *ngIf='entry.type==1' class='home'>   {{ entry.home.comments}}</td>
+          <td *ngIf='entry.type==2' class='agent'>  {{ entry.agent.feedback }}</td>
+          <td *ngIf='entry.type==3' class='bins' >  bins</td>
+    
+          <!-- <td *ngIf='entry.type==1 && _AUTH.adminRights([2])' class='home'>
+            <button class="bth btn-primary" (click)="EditHomeVisit(entry)">Edit</button>
+          </td>
+          <td *ngIf='entry.type==2 && _AUTH.adminRights([3])' class='agent'>
+            <button class="bth btn-danger" (click)="UpdateEstateVisit(entry)">Update</button>
+          </td>
+          <td *ngIf='entry.type==3 && _AUTH.adminRights([4])' class='bins' >
+            <button class="bth btn-secondary" (click)="HideBin(entry)">Hide</button>
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <div *ngIf='!errorMsg'>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('Cancel')">Cancel</button>
+    </div>
+    <div class='messages'> <!-- messages -->
+        <div class="alert alert-danger" role="alert" *ngIf='errorMsg'>{{ errorMsg }}</div>
+    </div>
+  </div>

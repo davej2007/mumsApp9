@@ -11,3 +11,13 @@
     height:1.75rem;
     width:1.75rem
 }
+.agent{
+    background-color: lightsalmon;
+}
+.home{
+    background-color:lightsteelblue;
+}
+.bins{
+    background-color: black;
+    color : green
+}

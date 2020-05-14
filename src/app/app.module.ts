@@ -51,6 +51,7 @@ import { ListDisplayComponent } from './components/pages/homePages/2-list-displa
 import { HomeVisitModalContent } from './components/pages/homePages/MODALS/1-home-visit/home-visit';
 import { EstateVisitModalContent } from './components/pages/homePages/MODALS/2-estate-visit/estate-visit';
 import { DisplayChecksPipe } from './components/custom/pipe/display-checks.pipe';
+import { CalenderDetailsModalContent } from './components/pages/homePages/MODALS/3-calender-details/calender-details';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { DisplayChecksPipe } from './components/custom/pipe/display-checks.pipe'
     PaidModalContent,
     PostModalContent,
     DeliveryModalContent,
+    CalenderDetailsModalContent,
     HomeVisitModalContent,
     EstateVisitModalContent,
     DisplayChecksPipe    
@@ -111,6 +113,7 @@ import { DisplayChecksPipe } from './components/custom/pipe/display-checks.pipe'
     PaidModalContent,
     PostModalContent,
     DeliveryModalContent,
+    CalenderDetailsModalContent,
     HomeVisitModalContent,
     EstateVisitModalContent
   ],
