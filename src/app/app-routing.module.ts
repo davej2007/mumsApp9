@@ -76,7 +76,8 @@ const routes: Routes = [
   { path:'homeSite',                component   : HomeNavBarComponent, children: [
           { path : 'calender',      component   : CalenderDisplayComponent,
                                     canActivate : [AuthGuard],
-                                    data        : { role : [2,3,4]  } },
+                                    data        : { role : [2,3,4]  },
+                                    resolve     : { info : VisitInfoService } },
           { path : 'visitList',     component   : ListDisplayComponent,
                                     canActivate : [AuthGuard],
                                     data        : { role : [2,3,4]  },

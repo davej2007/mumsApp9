@@ -1,10 +1,44 @@
+p{
+    padding : 0px;
+    margin: 0px;
+}
+td{
+    text-align : center;
+    width : 13%;
+    border : 1px solid black;
+    padding : 0px;
+    margin : 0px;
+}
+th{
+    text-align: center;
+    height: 100px;
+}
 .NotCurrent {
     background-color: lightslategray;
 }
 .today {
-    background-color: blue;
+    background-color: salmon;
     color : Yellow;
+    border: 1px solid black
 }
 .normal {
     color:red
+}
+.dave{
+    color: darkblue;
+    font-size: 150%;
+}
+.jacky{
+    color: darkred;
+    font-size: 150%;
+}
+.andrew{
+    color: darkorange;
+    font-size: 150%;
+}
+.recycling{
+    color: darkgreen;
+}
+.black{
+    color:black;
 }

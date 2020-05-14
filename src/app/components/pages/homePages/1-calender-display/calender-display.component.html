@@ -6,21 +6,21 @@
         </button>
     </div>
 </div>
-<h1>{{DisplayMonth.month}}:{{DisplayMonth.year}}</h1>
-
 <table class="table">
   <thead>
     <tr>
-      <th>#</th>
+      <th>wc</th>
       <th *ngFor='let day of DAYS'>{{day}}</th>
-      
     </tr>
   </thead>
   <tbody>
     <tr *ngFor='let week of WEEKS'>
         <th>{{ week.weekCommence | displayDate }}</th>
         <td *ngFor='let day of week.Days' [ngClass]="getCustomCss(day.date)">
-            <span>{{ day.data }}</span>
+          <p>{{ day.date | date:'dd MMM' }}</p>
+            <p *ngFor='let home of day.visit' [ngClass]="getCustomColor(home.name)">{{ home.name }}</p>
+            <p *ngFor='let agent of day.agent' [ngClass]="getCustomColor(agent.time)">{{ agent.time }}</p>
+            <p *ngFor='let bins of day.bins' [ngClass]="getCustomColor(bins.type)">{{ bins.type }}</p>
         </td>
     </tr>
   </tbody>
