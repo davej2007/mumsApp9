@@ -3,6 +3,7 @@ import { AbstractControl } from "@angular/forms";
 export const  aDayIs = 86400000,
               aWeekIs = 604800000,
               Months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+              days = ['Sun','Mon','Tues','Wed','Thur','Fri','Sat'],
               Days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 export function ConvertDate(dateValue:number):string{

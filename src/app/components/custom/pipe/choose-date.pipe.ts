@@ -11,7 +11,7 @@ export class ChooseDatePipe implements PipeTransform {
     if (fl==1){
       return lastDate.getDate().toString()+' '+Months[lastDate.getMonth()]+' '+lastDate.getFullYear().toString().slice(-2); 
     } else if(fl==0 && length > 1){
-      return firstDate.getDate().toString()+' '+Months[firstDate.getMonth()]+' '+firstDate.getFullYear().toString().slice(-2);
+      return value.length;
     } else {
       return '...';
     }

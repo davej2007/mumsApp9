@@ -23,7 +23,8 @@ export class AuctionTableControlService {
     sortDirection: 'desc',
     category : undefined,
     status : [],
-    displayDate : {month:null, year:null}
+    displayDate : {month:null, year:null},
+    displayDay : -1
   };
 
   constructor(private pipe: DecimalPipe) {
@@ -54,6 +55,7 @@ export class AuctionTableControlService {
   get category() { return this._state.category; }
   get status() { return this._state.status; }
   get displayDate() { return this._state.displayDate; }
+  get displayDay() { return this._state.displayDay; }
   
   set page(page: number) { this._set({page}); }
   set pageSize(pageSize: number) { this._set({pageSize}); }
@@ -62,6 +64,7 @@ export class AuctionTableControlService {
   set category(category: number) { this._set({category}); }
   set status(status: Array<number>) { this._set({status}); }
   set displayDate(displayDate: IDISPLAYDATE) { this._set({displayDate}); }
+  set displayDay(displayDay: number) { this._set({displayDay}); }
 
   private _set(patch: Partial<IASTATE>) {
     Object.assign(this._state, patch);
@@ -77,6 +80,7 @@ export class AuctionTableControlService {
     entries = entries.filter(entry => matches(entry, searchTerm));
     entries = entries.filter(entry => categoryCheck(entry, this.category));
     entries = entries.filter(entry => statusCheck(entry, this.status));
+    entries = entries.filter(entry => statusDayOfWeek(entry, this.displayDay));
     const total = entries.length;
     const grandTotal = null
     // 3. paginate
@@ -96,6 +100,13 @@ function categoryCheck(entry: IAUCTION, cat: number) {
 }
 function statusCheck(entry: IAUCTION, sta: Array<number>) {
   if(sta.indexOf(entry.status)!==-1){
+    return true
+  } else {
+    return false
+  };
+}
+function statusDayOfWeek(a: IAUCTION, day: number) {
+  if (day === -1 || new Date(a.auction.dateListed[a.auction.dateListed.length-1]).getDay() == day) {
     return true
   } else {
     return false

@@ -23,7 +23,8 @@ export class SoldTableControlService {
     sortDirection: 'desc',
     category : undefined,
     status : [],
-    displayDate : {month:null, year:null}
+    displayDate : {month:null, year:null},
+    displayDay : undefined
   };
 
   constructor(private pipe: DecimalPipe) {

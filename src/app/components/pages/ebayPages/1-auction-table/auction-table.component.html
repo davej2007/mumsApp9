@@ -4,8 +4,9 @@
   </h1>
   <div class="btn-group btn-group-toggle">
     <button class="btn btn-danger" *ngIf='_AUTH.adminRights([1])' (click)="openNewAuction()">Create New Auction</button>
-    <button type="button" class="btn btn-outline-success" [class.active]="checkStatusActive(-1)" (click)='tableService.status = StatusShow'>All</button>
+    <button type="button" class="btn btn-outline-success" [class.active]="checkStatusActive(-1)" (click)='tableService.status = StatusShow; tableService.displayDay = -1'>All</button>
     <button type="button" class="btn btn-outline-primary" [class.active]="checkStatusActive(sta)" *ngFor="let sta of StatusShow" (click)='tableService.status = [sta]'>{{StatusList[sta]}}</button>
+    <button type="button" class="btn btn-outline-secondary" [class.active]="checkDayActive(i)"  *ngFor="let day of Days; index as i" (click)='tableService.displayDay = i; tableService.status = [1]'>{{ day }}</button>
   </div>
   <br>
   <div class="btn-group btn-group-toggle">
@@ -46,8 +47,8 @@
     <tr *ngFor="let entry of Auctions$ | async"
         [ngClass]="{'draft':isDraft(entry.status), 'inactive':needToRenew(entry)}">      
       <td *ngIf='tableService.status.length>1'>{{ StatusList[entry.status] }}</td>
-      <td>{{ entry.auction.dateListed | chooseDate : 0 }}</td>
       <td>{{ entry.auction.dateListed  | chooseDate : 1 }}</td>
+      <td class="badge badge-primary">{{ entry.auction.dateListed | chooseDate : 0 }}</td>
       <td *ngIf='tableService.category == undefined'>{{ CategoryList[entry.category] }}</td>
       <td><ngb-highlight [result]="entry.auction.description" [term]="tableService.searchTerm"></ngb-highlight></td>
       <td>{{ entry.auction.initialPrice | displayPounds }}</td>

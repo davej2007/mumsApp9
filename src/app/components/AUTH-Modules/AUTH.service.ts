@@ -36,8 +36,6 @@ initilizeSettings(): Promise<any> {
       })
 return AuthPromise;
 }
-
-
   UserLoggedIn(){
     if(this.UserName==null){
       return false

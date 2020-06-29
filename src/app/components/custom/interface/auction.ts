@@ -43,5 +43,6 @@ export interface IASEARCHRESULT {
     sortDirection: SortDirection,
     category : number,
     status : Array<number>,
-    displayDate : IDISPLAYDATE
+    displayDate : IDISPLAYDATE,
+    displayDay : number
   }

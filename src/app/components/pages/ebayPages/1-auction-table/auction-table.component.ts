@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { STATUS, CATEGORIES }         from 'src/app/components/custom/directive/defaultValues';
 import { IAUCTION }                   from 'src/app/components/custom/interface/auction';
-import { aDayIs }                     from 'src/app/components/custom/directive/functions';
+import { aDayIs, days }                     from 'src/app/components/custom/directive/functions';
 import { AuctionTableControlService } from 'src/app/components/services/ebay/table-control-auction.service';
 import { AuctionService }             from 'src/app/components/services/ebay/auction.service';
 // Modals
@@ -38,6 +38,7 @@ export class AuctionTableComponent implements OnInit{
 
   public StatusList : any = STATUS;
   public CategoryList : any = CATEGORIES;
+  public Days : Array<String> = days;
   public StatusShow : [number];
   public toDay : number = Date.parse(new Date().toDateString())
 
@@ -64,6 +65,13 @@ export class AuctionTableComponent implements OnInit{
       return false
     } else {
       return true
+    }
+  }
+  checkDayActive(i:Number){
+    if(this.tableService.displayDay == i){
+      return true
+    } else {
+      return false
     }
   }
   needToRenew(entry:any){
