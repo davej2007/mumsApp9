@@ -12,5 +12,7 @@ export const CATEGORIES = [
     'Others - Household', 
     'Magazines',
     'Books - Sci Fi',
-    'Books - Other'
+    'Books - Other',
+    'Others - Candles',
+    'Others - Cosmentics'
      ];
